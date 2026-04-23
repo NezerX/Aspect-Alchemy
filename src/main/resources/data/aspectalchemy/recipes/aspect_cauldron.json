@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    "CKC",
+    "CCC"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "K": {
+      "item": "minecraft:cauldron"
+    }
+  },
+  "result": {
+    "item": "aspectalchemy:aspect_empty_cauldron",
+    "count": 1
+  }
+}

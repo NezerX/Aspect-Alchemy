@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "aspectalchemy:item/glass_bottle_small"
+  }
+}

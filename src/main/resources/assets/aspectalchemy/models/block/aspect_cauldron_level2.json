@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/template_cauldron_level2",
+  "textures": {
+    "bottom": "aspectalchemy:block/aspect_cauldron_bottom",
+    "content": "aspectalchemy:block/water_still",
+    "inside": "aspectalchemy:block/aspect_cauldron_inner",
+    "particle": "aspectalchemy:block/aspect_cauldron_side",
+    "side": "aspectalchemy:block/aspect_cauldron_side",
+    "top": "aspectalchemy:block/aspect_cauldron_top"
+  }
+}

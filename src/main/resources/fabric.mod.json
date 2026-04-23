@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "aspect-alchemy",
+	"version": "${version}",
+	"name": "Aspect Alchemy",
+	"description": "Brew unique potions by combining alchemical aspects of Minecraft items!",
+	"authors": [
+		"NezerX"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/aspect-alchemy/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"nezerx.aspectalchemy.AspectAlchemyMod"
+		],
+		"client": [
+			"nezerx.aspectalchemy.client.AspectAlchemyClient"
+		]
+	},
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	}
+}
