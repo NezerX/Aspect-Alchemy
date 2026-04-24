@@ -1,7 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "minecraft:item/potion_overlay",
     "layer1": "aspectalchemy:item/glass_bottle_large_glass",
     "layer2": "aspectalchemy:item/glass_bottle_large_frame"
   }
