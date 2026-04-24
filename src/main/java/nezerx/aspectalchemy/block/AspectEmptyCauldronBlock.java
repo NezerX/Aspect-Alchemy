@@ -48,6 +48,13 @@ public class AspectEmptyCauldronBlock extends Block {
         return VoxelShapes.union(bottom, north, south, west, east);
     }
 
+    @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        if (!world.isClient && !player.isCreative()) {
+            Block.dropStack(world, pos, new ItemStack(ModBlocks.ASPECT_EMPTY_CAULDRON.asItem()));
+        }
+        super.onBreak(world, pos, state, player);
+    }
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
