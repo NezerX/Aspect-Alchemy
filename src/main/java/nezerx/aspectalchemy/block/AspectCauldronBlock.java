@@ -240,9 +240,9 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
         // ── Обычные стеклянные бутылки ────────────────────────────────────────
         Item resultPotion = null;
         if (item == Items.GLASS_BOTTLE) resultPotion = Items.POTION;
-    /*  else if (item == ModItems.GLASS_BOTTLE_SMALL)  resultPotion = ModItems.POTION_SMALL;
+        else if (item == ModItems.GLASS_BOTTLE_SMALL)  resultPotion = ModItems.POTION_SMALL;
         else if (item == ModItems.GLASS_BOTTLE_MEDIUM) resultPotion = ModItems.POTION_MEDIUM;
-        else if (item == ModItems.GLASS_BOTTLE_LARGE)  resultPotion = ModItems.POTION_LARGE; */
+        else if (item == ModItems.GLASS_BOTTLE_LARGE)  resultPotion = ModItems.POTION_LARGE;
 
         if (resultPotion != null) {
             if (cauldron.isBoiling() && cauldron.getIngredientCount() > 0) {
