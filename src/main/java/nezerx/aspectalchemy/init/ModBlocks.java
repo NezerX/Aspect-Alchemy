@@ -19,11 +19,13 @@ public class ModBlocks {
     public static final Block ASPECT_EMPTY_CAULDRON = new AspectEmptyCauldronBlock(
             FabricBlockSettings.copyOf(Blocks.CAULDRON)
                     .nonOpaque()
+                    .strength(2.0f, 3.0f)
                     .requiresTool()
     );
     public static final Block ASPECT_CAULDRON = new AspectCauldronBlock(
             FabricBlockSettings.copyOf(Blocks.CAULDRON)
                     .nonOpaque()
+                    .strength(2.0f, 3.0f)
                     .requiresTool()
     );
 
