@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "aspect-alchemy",
-	"version": "${version}",
+	"version": "1.0.1",
 	"name": "Aspect Alchemy",
 	"description": "Brew unique potions by combining alchemical aspects of Minecraft items!",
 	"authors": [
@@ -12,7 +12,7 @@
 		"sources": "https://github.com/NezerX/Aspect-Alchemy"
 	},
 	"license": "MIT",
-	"icon": "assets/aspect-alchemy/icon.png",
+	"icon": "assets/aspectalchemy/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
