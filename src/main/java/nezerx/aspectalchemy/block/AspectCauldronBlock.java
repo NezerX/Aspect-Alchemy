@@ -2,7 +2,6 @@ package nezerx.aspectalchemy.block;
 
 import java.util.List;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import nezerx.aspectalchemy.block.entity.AspectCauldronBlockEntity;
 import nezerx.aspectalchemy.data.AspectAlchemyData;
 import nezerx.aspectalchemy.init.ModBlocks;
@@ -160,7 +159,6 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
             living.extinguish();
         }
 
-        // ── Урон от кипятка ──────────────────────────────────────────────────────────
         if (state.get(BOILING)
                 && !living.isFireImmune()
                 && !EnchantmentHelper.hasFrostWalker(living)
@@ -168,7 +166,6 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
             entity.damage(world.getDamageSources().hotFloor(), 1.0F);
         }
 
-        // ── Эффекты из ингредиентов ───────────────────────────────────────────────────
         if (world.getTime() % 20 != 0) return;
 
         BlockEntity be = world.getBlockEntity(pos);
@@ -185,6 +182,17 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
         }
     }
 
+    // ── Вспомогательный метод: уменьшить уровень котла ───────────────────────
+
+    private void decreaseCauldronLevel(BlockState state, World world, BlockPos pos, AspectCauldronBlockEntity cauldron) {
+        int level = state.get(LEVEL);
+        if (level > 1) {
+            world.setBlockState(pos, state.with(LEVEL, level - 1));
+        } else {
+            cauldron.clearInventory();
+            world.setBlockState(pos, ModBlocks.ASPECT_EMPTY_CAULDRON.getDefaultState());
+        }
+    }
 
     // ── Взаимодействие ────────────────────────────────────────────────────────
 
@@ -193,96 +201,98 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
         ItemStack stack = player.getStackInHand(hand);
         BlockEntity be = world.getBlockEntity(pos);
 
-        if (be instanceof AspectCauldronBlockEntity cauldron) {
-            Item item = stack.getItem();
+        if (!(be instanceof AspectCauldronBlockEntity cauldron)) return ActionResult.PASS;
 
-            // --- НОВАЯ ЛОГИКА: Долив в существующее зелье ---
-            if (item instanceof nezerx.aspectalchemy.item.MultiUsePotionItem multiItem) {
-                int currentSips = multiItem.getSipsLeft(stack);
-                if (currentSips < multiItem.getMaxSips() && cauldron.isBoiling() && cauldron.getIngredientCount() > 0) {
-                    // Проверка на совпадение эффектов (чтобы не смешивать разные зелья)
-                    if (isPotionMatching(stack, cauldron)) {
-                        if (!world.isClient) {
-                            multiItem.setSipsLeft(stack, currentSips + 1);
+        Item item = stack.getItem();
 
-                            // Тратим воду из котла
-                            int level = state.get(LEVEL);
-                            if (level > 1) {
-                                world.setBlockState(pos, state.with(LEVEL, level - 1));
-                            } else {
-                                cauldron.clearInventory();
-                                world.setBlockState(pos, nezerx.aspectalchemy.init.ModBlocks.ASPECT_EMPTY_CAULDRON.getDefaultState());
-                            }
-                        }
-                        return ActionResult.success(world.isClient);
-                    }
+        // ── Мультибутылки ─────────────────────────────────────────────────────
+        if (item instanceof nezerx.aspectalchemy.item.MultiUsePotionItem multiItem) {
+            if (!cauldron.isBoiling() || cauldron.getIngredientCount() == 0) return ActionResult.CONSUME;
+
+            // Бутылка пустая (нет CustomPotionEffects в NBT) — первое зачерпывание
+            boolean isEmpty = !stack.hasNbt() || !stack.getOrCreateNbt().contains("CustomPotionEffects");
+
+            if (isEmpty) {
+                if (!world.isClient) {
+                    ItemStack potionStack = cauldron.createPotionStack(item);
+                    multiItem.setSipsLeft(potionStack, 1);
+                    if (!player.getAbilities().creativeMode) stack.decrement(1);
+                    if (stack.isEmpty()) player.setStackInHand(hand, potionStack);
+                    else if (!player.getInventory().insertStack(potionStack)) player.dropItem(potionStack, false);
+                    decreaseCauldronLevel(state, world, pos, cauldron);
                 }
+                return ActionResult.success(world.isClient);
             }
 
-            Item resultPotion = null;
-            if (item == Items.GLASS_BOTTLE) resultPotion = Items.POTION;
-        /*    else if (item == ModItems.GLASS_BOTTLE_SMALL) resultPotion = ModItems.POTION_SMALL;
-            else if (item == ModItems.GLASS_BOTTLE_MEDIUM) resultPotion = ModItems.POTION_MEDIUM;
-            else if (item == ModItems.GLASS_BOTTLE_LARGE) resultPotion = ModItems.POTION_LARGE; */
-
-            if (resultPotion != null) {
-                if (cauldron.isBoiling() && cauldron.getIngredientCount() > 0) {
-                    if (!world.isClient) {
-                        ItemStack potionStack = cauldron.createPotionStack(resultPotion);
-                        if (!player.getAbilities().creativeMode) stack.decrement(1);
-                        if (stack.isEmpty()) player.setStackInHand(hand, potionStack);
-                        else if (!player.getInventory().insertStack(potionStack)) player.dropItem(potionStack, false);
-
-                        int currentLevel = state.get(LEVEL);
-                        if (currentLevel > 1) {
-                            world.setBlockState(pos, state.with(LEVEL, currentLevel - 1));
-                        } else {
-                            cauldron.clearInventory();
-                            world.setBlockState(pos, nezerx.aspectalchemy.init.ModBlocks.ASPECT_EMPTY_CAULDRON.getDefaultState());
-                        }
-                    }
-                    return ActionResult.success(world.isClient);
+            // Бутылка уже содержит зелье — долив, если эффекты совпадают
+            int currentSips = multiItem.getSipsLeft(stack);
+            if (currentSips < multiItem.getMaxSips() && isPotionMatching(stack, cauldron)) {
+                if (!world.isClient) {
+                    multiItem.setSipsLeft(stack, currentSips + 1);
+                    decreaseCauldronLevel(state, world, pos, cauldron);
                 }
+                return ActionResult.success(world.isClient);
+            }
+
+            return ActionResult.CONSUME;
+        }
+
+        // ── Обычные стеклянные бутылки ────────────────────────────────────────
+        Item resultPotion = null;
+        if (item == Items.GLASS_BOTTLE) resultPotion = Items.POTION;
+    /*  else if (item == ModItems.GLASS_BOTTLE_SMALL)  resultPotion = ModItems.POTION_SMALL;
+        else if (item == ModItems.GLASS_BOTTLE_MEDIUM) resultPotion = ModItems.POTION_MEDIUM;
+        else if (item == ModItems.GLASS_BOTTLE_LARGE)  resultPotion = ModItems.POTION_LARGE; */
+
+        if (resultPotion != null) {
+            if (cauldron.isBoiling() && cauldron.getIngredientCount() > 0) {
+                if (!world.isClient) {
+                    ItemStack potionStack = cauldron.createPotionStack(resultPotion);
+                    if (!player.getAbilities().creativeMode) stack.decrement(1);
+                    if (stack.isEmpty()) player.setStackInHand(hand, potionStack);
+                    else if (!player.getInventory().insertStack(potionStack)) player.dropItem(potionStack, false);
+                    decreaseCauldronLevel(state, world, pos, cauldron);
+                }
+                return ActionResult.success(world.isClient);
+            }
+            return ActionResult.CONSUME;
+        }
+
+        // ── Ингредиенты ───────────────────────────────────────────────────────
+        if (AspectAlchemyData.ASPECT_MAP.containsKey(item)) {
+            if (!cauldron.isBoiling()) {
+                if (!world.isClient) player.sendMessage(Text.translatable("block.aspectalchemy.cauldron.not_boiling"), true);
                 return ActionResult.CONSUME;
             }
-
-            if (AspectAlchemyData.ASPECT_MAP.containsKey(item)) {
-                // Добавлена проверка на кипение для ингредиентов
-                if (!cauldron.isBoiling()) {
-                    if (!world.isClient) player.sendMessage(Text.translatable("block.aspectalchemy.cauldron.not_boiling"), true);
-                    return ActionResult.CONSUME;
-                }
-
-                if (cauldron.canAddIngredient()) {
-                    if (!world.isClient) {
-                        if (cauldron.addIngredient(stack)) {
-                            if (!player.getAbilities().creativeMode) stack.decrement(1);
-                            world.playSound(null, pos, net.minecraft.sound.SoundEvents.ENTITY_GENERIC_SPLASH, net.minecraft.sound.SoundCategory.BLOCKS, 0.5f, 1.0f);
-                        }
+            if (cauldron.canAddIngredient()) {
+                if (!world.isClient) {
+                    if (cauldron.addIngredient(stack)) {
+                        if (!player.getAbilities().creativeMode) stack.decrement(1);
+                        world.playSound(null, pos, net.minecraft.sound.SoundEvents.ENTITY_GENERIC_SPLASH,
+                                net.minecraft.sound.SoundCategory.BLOCKS, 0.5f, 1.0f);
                     }
-                    return ActionResult.success(world.isClient);
-                } else {
-                    if (!world.isClient) player.sendMessage(Text.translatable("block.aspectalchemy.cauldron.full"), true);
-                    return ActionResult.CONSUME;
                 }
+                return ActionResult.success(world.isClient);
+            } else {
+                if (!world.isClient) player.sendMessage(Text.translatable("block.aspectalchemy.cauldron.full"), true);
+                return ActionResult.CONSUME;
             }
         }
+
         return ActionResult.PASS;
     }
 
     private boolean isPotionMatching(ItemStack stack, AspectCauldronBlockEntity cauldron) {
-        List<net.minecraft.entity.effect.StatusEffectInstance> potionEffects = net.minecraft.potion.PotionUtil.getCustomPotionEffects(stack);
+        List<net.minecraft.entity.effect.StatusEffectInstance> potionEffects =
+                net.minecraft.potion.PotionUtil.getCustomPotionEffects(stack);
         List<net.minecraft.entity.effect.StatusEffectInstance> cauldronEffects = cauldron.getActiveEffects();
 
         if (potionEffects.size() != cauldronEffects.size()) return false;
 
-        // Сравниваем типы и усилители
         for (int i = 0; i < potionEffects.size(); i++) {
             var p = potionEffects.get(i);
             var c = cauldronEffects.get(i);
-            if (p.getEffectType() != c.getEffectType() || p.getAmplifier() != c.getAmplifier()) {
-                return false;
-            }
+            if (p.getEffectType() != c.getEffectType() || p.getAmplifier() != c.getAmplifier()) return false;
         }
         return true;
     }

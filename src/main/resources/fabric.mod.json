@@ -8,10 +8,10 @@
 		"NezerX"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://github.com/NezerX/Aspect-Alchemy",
+		"sources": "https://github.com/NezerX/Aspect-Alchemy"
 	},
-	"license": "CC0-1.0",
+	"license": "MIT",
 	"icon": "assets/aspect-alchemy/icon.png",
 	"environment": "*",
 	"entrypoints": {
