@@ -17,10 +17,14 @@ import net.minecraft.util.Identifier;
 public class ModBlocks {
 
     public static final Block ASPECT_EMPTY_CAULDRON = new AspectEmptyCauldronBlock(
-            FabricBlockSettings.copyOf(Blocks.CAULDRON).nonOpaque()
+            FabricBlockSettings.copyOf(Blocks.CAULDRON)
+                    .nonOpaque()
+                    .requiresTool()
     );
     public static final Block ASPECT_CAULDRON = new AspectCauldronBlock(
-            FabricBlockSettings.copyOf(Blocks.CAULDRON).nonOpaque()
+            FabricBlockSettings.copyOf(Blocks.CAULDRON)
+                    .nonOpaque()
+                    .requiresTool()
     );
 
     private static Block registerBlock(String name, Block block) {
@@ -35,8 +39,10 @@ public class ModBlocks {
         registerBlock("aspect_empty_cauldron", ASPECT_EMPTY_CAULDRON);
         registerBlock("aspect_cauldron", ASPECT_CAULDRON);
 
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries -> {
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> {
             entries.add(ASPECT_EMPTY_CAULDRON);
         });
     }
+
+
 }

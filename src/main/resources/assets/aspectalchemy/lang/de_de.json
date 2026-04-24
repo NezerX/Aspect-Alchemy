@@ -37,5 +37,6 @@
   "item.aspectalchemy.glass_bottle_large": "Großes Fläschchen",
   "item.aspectalchemy.potion_small": "Kleiner Trank",
   "item.aspectalchemy.potion_medium": "Mittlerer Trank",
-  "item.aspectalchemy.potion_large": "Großer Trank"
+  "item.aspectalchemy.potion_large": "Großer Trank",
+  "item.aspectalchemy.tooltip.sips": "Schlucke: %s / %s"
 }

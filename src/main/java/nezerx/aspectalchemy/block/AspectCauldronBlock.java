@@ -74,6 +74,14 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
         return COLLISION_SHAPE;
     }
 
+    @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        if (!world.isClient && !player.isCreative()) {
+            Block.dropStack(world, pos, new ItemStack(ModBlocks.ASPECT_EMPTY_CAULDRON));
+        }
+        super.onBreak(world, pos, state, player);
+    }
+
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {

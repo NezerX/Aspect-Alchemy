@@ -38,5 +38,6 @@
   "item.aspectalchemy.glass_bottle_large": "Большой пузырь",
   "item.aspectalchemy.potion_small": "Малое зелье",
   "item.aspectalchemy.potion_medium": "Среднее зелье",
-  "item.aspectalchemy.potion_large": "Большое зелье"
+  "item.aspectalchemy.potion_large": "Большое зелье",
+  "item.aspectalchemy.tooltip.sips": "Глотков: %s / %s"
 }

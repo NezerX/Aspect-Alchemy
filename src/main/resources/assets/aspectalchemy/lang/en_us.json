@@ -38,5 +38,6 @@
   "item.aspectalchemy.glass_bottle_large": "Large glass bottle",
   "item.aspectalchemy.potion_small": "Small potion",
   "item.aspectalchemy.potion_medium": "Medium potion",
-  "item.aspectalchemy.potion_large": "Large potion"
+  "item.aspectalchemy.potion_large": "Large potion",
+  "item.aspectalchemy.tooltip.sips": "Sips: %s / %s"
 }

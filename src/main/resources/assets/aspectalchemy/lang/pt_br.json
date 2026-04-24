@@ -37,5 +37,6 @@
   "item.aspectalchemy.glass_bottle_large": "Frasco grande",
   "item.aspectalchemy.potion_small": "Poción pequeña",
   "item.aspectalchemy.potion_medium": "Poción mediana",
-  "item.aspectalchemy.potion_large": "Poción grande"
+  "item.aspectalchemy.potion_large": "Poción grande",
+  "item.aspectalchemy.tooltip.sips": "Goles: %s / %s"
 }

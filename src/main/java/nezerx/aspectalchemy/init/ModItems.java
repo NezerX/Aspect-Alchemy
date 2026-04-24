@@ -33,12 +33,5 @@ public class ModItems {
             entries.add(GLASS_BOTTLE_MEDIUM);
             entries.add(GLASS_BOTTLE_LARGE);
         });
-
-        // Добавляем зелья в Еду и Напитки
-          ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> {
-            entries.add(POTION_SMALL);
-            entries.add(POTION_MEDIUM);
-            entries.add(POTION_LARGE);
-        });
     }
 }
