@@ -215,7 +215,7 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
 
         // ── Мультибутылки ─────────────────────────────────────────────────────
         if (item instanceof nezerx.aspectalchemy.item.MultiUsePotionItem multiItem) {
-            if (!cauldron.isBoiling() || cauldron.getIngredientCount() == 0) return ActionResult.CONSUME;
+            if (cauldron.getIngredientCount() == 0) return ActionResult.CONSUME;
 
             // Бутылка пустая (нет CustomPotionEffects в NBT) — первое зачерпывание
             boolean isEmpty = !stack.hasNbt() || !stack.getOrCreateNbt().contains("CustomPotionEffects");
