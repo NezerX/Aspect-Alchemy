@@ -1,12 +1,10 @@
 {
-  "block.aspectalchemy.aspect_empty_cauldron": "Алхимический котел",
-  "block.aspectalchemy.aspect_cauldron": "Алхимический котел",
-  "block.aspectalchemy.cauldron.not_boiling": "Котел не кипит!",
+  "block.aspectalchemy.aspect_empty_cauldron": "Алхимический котёл",
+  "block.aspectalchemy.aspect_cauldron": "Алхимический котёл",
   "item.aspectalchemy.potion.prefix.beneficial": "Зелье",
-  "item.aspectalchemy.potion.prefix.harmful": "Отрава",
+  "item.aspectalchemy.potion.prefix.harmful": "Яд",
   "item.aspectalchemy.potion.conjunction": "и",
   "item.aspectalchemy.tooltip.aspects": "Открытые аспекты:",
-
   "effect.aspectalchemy.declined.speed": "Скорости",
   "effect.aspectalchemy.declined.jump_boost": "Прыгучести",
   "effect.aspectalchemy.declined.mining_fatigue": "Усталости",
@@ -33,11 +31,16 @@
   "effect.aspectalchemy.declined.resistance": "Сопротивления",
   "effect.aspectalchemy.declined.slowness": "Замедления",
   "effect.aspectalchemy.declined.unluck": "Невезения",
-  "item.aspectalchemy.glass_bottle_small": "Малый пузырёк",
-  "item.aspectalchemy.glass_bottle_medium": "Средний пузырь",
-  "item.aspectalchemy.glass_bottle_large": "Большой пузырь",
+  "item.aspectalchemy.glass_bottle_small": "Малая бутылка",
+  "item.aspectalchemy.glass_bottle_medium": "Средняя бутылка",
+  "item.aspectalchemy.glass_bottle_large": "Большая бутылка",
   "item.aspectalchemy.potion_small": "Малое зелье",
   "item.aspectalchemy.potion_medium": "Среднее зелье",
   "item.aspectalchemy.potion_large": "Большое зелье",
-  "item.aspectalchemy.tooltip.sips": "Глотков: %s / %s"
+  "item.aspectalchemy.tooltip.sips": "Глотков: %s / %s",
+  "block.aspectalchemy.cauldron.empty": "Котёл пуст",
+  "block.aspectalchemy.cauldron.bottle_full": "Бутылка уже полна",
+  "block.aspectalchemy.cauldron.potion_mismatch": "Зелье в котле и бутылке не совпадает",
+  "block.aspectalchemy.cauldron.not_boiling": "Котёл не кипит",
+  "block.aspectalchemy.cauldron.full": "Котёл заполнен"
 }

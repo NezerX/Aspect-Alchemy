@@ -1,7 +1,6 @@
 {
   "block.aspectalchemy.aspect_empty_cauldron": "Caldero alquímico",
   "block.aspectalchemy.aspect_cauldron": "Caldero alquímico",
-  "block.aspectalchemy.cauldron.not_boiling": "¡El caldero no está hirviendo!",
   "item.aspectalchemy.potion.prefix.beneficial": "Poción de",
   "item.aspectalchemy.potion.prefix.harmful": "Veneno de",
   "item.aspectalchemy.potion.conjunction": "y",
@@ -38,5 +37,10 @@
   "item.aspectalchemy.potion_small": "Poción pequeña",
   "item.aspectalchemy.potion_medium": "Poción mediana",
   "item.aspectalchemy.potion_large": "Poción grande",
-  "item.aspectalchemy.tooltip.sips": "Goles: %s / %s"
+  "item.aspectalchemy.tooltip.sips": "Goles: %s / %s",
+  "block.aspectalchemy.cauldron.empty": "O caldeirão está vazio",
+  "block.aspectalchemy.cauldron.bottle_full": "A garrafa já está cheia",
+  "block.aspectalchemy.cauldron.potion_mismatch": "As poções do caldeirão e da garrafa não correspondem",
+  "block.aspectalchemy.cauldron.not_boiling": "O caldeirão não está fervendo",
+  "block.aspectalchemy.cauldron.full": "O caldeirão está cheio"
 }

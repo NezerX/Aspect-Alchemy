@@ -1,7 +1,6 @@
 {
   "block.aspectalchemy.aspect_empty_cauldron": "Aspect Cauldron",
   "block.aspectalchemy.aspect_cauldron": "Aspect Cauldron",
-  "block.aspectalchemy.cauldron.not_boiling": "The cauldron is not boiling!",
   "item.aspectalchemy.potion.prefix.beneficial": "Potion of",
   "item.aspectalchemy.potion.prefix.harmful": "Bane of",
   "item.aspectalchemy.potion.conjunction": "and",
@@ -39,5 +38,10 @@
   "item.aspectalchemy.potion_small": "Small potion",
   "item.aspectalchemy.potion_medium": "Medium potion",
   "item.aspectalchemy.potion_large": "Large potion",
-  "item.aspectalchemy.tooltip.sips": "Sips: %s / %s"
+  "item.aspectalchemy.tooltip.sips": "Sips: %s / %s",
+  "block.aspectalchemy.cauldron.empty": "The cauldron is empty",
+  "block.aspectalchemy.cauldron.bottle_full": "The bottle is already full",
+  "block.aspectalchemy.cauldron.potion_mismatch": "The potions in the cauldron and bottle don't match",
+  "block.aspectalchemy.cauldron.not_boiling": "The cauldron is not boiling",
+  "block.aspectalchemy.cauldron.full": "The cauldron is full"
 }

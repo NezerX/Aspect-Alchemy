@@ -1,7 +1,6 @@
 {
   "block.aspectalchemy.aspect_empty_cauldron": "Alchemistischer Kessel",
   "block.aspectalchemy.aspect_cauldron": "Alchemistischer Kessel",
-  "block.aspectalchemy.cauldron.not_boiling": "Der Kessel kocht nicht!",
   "item.aspectalchemy.potion.prefix.beneficial": "Trank der",
   "item.aspectalchemy.potion.prefix.harmful": "Gift der",
   "item.aspectalchemy.potion.conjunction": "und",
@@ -38,5 +37,10 @@
   "item.aspectalchemy.potion_small": "Kleiner Trank",
   "item.aspectalchemy.potion_medium": "Mittlerer Trank",
   "item.aspectalchemy.potion_large": "Großer Trank",
-  "item.aspectalchemy.tooltip.sips": "Schlucke: %s / %s"
+  "item.aspectalchemy.tooltip.sips": "Schlucke: %s / %s",
+  "block.aspectalchemy.cauldron.empty": "Der Kessel ist leer",
+  "block.aspectalchemy.cauldron.bottle_full": "Die Flasche ist bereits voll",
+  "block.aspectalchemy.cauldron.potion_mismatch": "Die Tränke im Kessel und in der Flasche stimmen nicht überein",
+  "block.aspectalchemy.cauldron.not_boiling": "Der Kessel kocht nicht",
+  "block.aspectalchemy.cauldron.full": "Der Kessel ist voll"
 }
