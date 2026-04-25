@@ -1,3 +1,5 @@
+You can find the Latest version here: https://github.com/NezerX/Aspect-Alchemy/releases
+
 Aspect Alchemy
 
 Aspect Alchemy is a Minecraft mod for the Fabric loader that introduces a deep, logic-based potion-making system centered around the Aspect Cauldron.
