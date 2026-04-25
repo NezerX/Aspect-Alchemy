@@ -203,7 +203,7 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
     }
 
     // ── Вспомогательный метод: вывести сообщение игроку (action bar) ─────────
-    // Выделен отдельный метод для вывода сообщений.─
+    // Выделен отдельный метод для вывода сообщений.
     // Это удобно при отладке: все сообщения об отказе проходят через одну точку.
     // Чтобы вместо action bar использовать чат — заменить true на false.
     private void sendMsg(World world, PlayerEntity player, String translationKey) {
