@@ -183,7 +183,7 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
                 }
 
                 if (!cauldron.canAddIngredient()) {
-                    // Котёл уже полон — тоже выталкиваем
+                    // Котёл уже полон — тоже выталкиваем.
                     itemEntity.setVelocity(0, 0.2, 0);
                     return;
                 }

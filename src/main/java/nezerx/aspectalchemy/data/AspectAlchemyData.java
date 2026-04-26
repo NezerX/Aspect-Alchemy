@@ -10,6 +10,7 @@ public class AspectAlchemyData {
     public static final Map<Item, List<StatusEffect>> ASPECT_MAP = new HashMap<>();
 
     static {
+        // ===== ОРИГИНАЛ =====
         put(Items.RABBIT_FOOT, StatusEffects.SPEED, StatusEffects.JUMP_BOOST, StatusEffects.MINING_FATIGUE, StatusEffects.LUCK);
         put(Items.PHANTOM_MEMBRANE, StatusEffects.SPEED, StatusEffects.SLOW_FALLING, StatusEffects.LEVITATION);
         put(Items.SUGAR, StatusEffects.SPEED, StatusEffects.ABSORPTION, StatusEffects.SATURATION);
@@ -29,6 +30,47 @@ public class AspectAlchemyData {
         put(Items.GLOWSTONE_DUST, StatusEffects.NIGHT_VISION, StatusEffects.NAUSEA, StatusEffects.GLOWING, StatusEffects.WEAKNESS);
         put(Items.DRAGON_BREATH, StatusEffects.ABSORPTION, StatusEffects.INSTANT_DAMAGE, StatusEffects.LEVITATION, StatusEffects.BAD_OMEN);
         put(Items.NETHER_WART, StatusEffects.RESISTANCE, StatusEffects.FIRE_RESISTANCE, StatusEffects.POISON, StatusEffects.UNLUCK);
+
+        // ===== НОВЫЕ =====
+
+        // ГРИБЫ (единый вектор: риск + биология)
+        put(Items.RED_MUSHROOM, StatusEffects.POISON, StatusEffects.NAUSEA, StatusEffects.STRENGTH);
+        put(Items.BROWN_MUSHROOM, StatusEffects.INSTANT_HEALTH, StatusEffects.HUNGER, StatusEffects.WEAKNESS);
+
+        // ЕДА ДЕШЁВАЯ
+        put(Items.SWEET_BERRIES, StatusEffects.SPEED, StatusEffects.HUNGER, StatusEffects.INSTANT_DAMAGE);
+
+        // МИНЕРАЛЫ
+        put(Items.AMETHYST_SHARD, StatusEffects.RESISTANCE, StatusEffects.NIGHT_VISION, StatusEffects.LUCK);
+        put(Items.QUARTZ, StatusEffects.HASTE, StatusEffects.GLOWING, StatusEffects.WEAKNESS);
+        put(Items.COAL, StatusEffects.STRENGTH, StatusEffects.HUNGER, StatusEffects.INSTANT_DAMAGE);
+
+        // ПРИРОДА / ФИЗИКА
+        put(Items.EGG, StatusEffects.LEVITATION, StatusEffects.WEAKNESS, StatusEffects.INSTANT_HEALTH);
+        put(Items.SOUL_SAND, StatusEffects.SLOWNESS, StatusEffects.WITHER, StatusEffects.UNLUCK, StatusEffects.INVISIBILITY);
+        put(Items.CLAY_BALL, StatusEffects.SLOWNESS, StatusEffects.RESISTANCE);
+        put(Items.OBSIDIAN, StatusEffects.RESISTANCE, StatusEffects.SLOWNESS, StatusEffects.FIRE_RESISTANCE);
+        put(Items.DIAMOND, StatusEffects.RESISTANCE, StatusEffects.HEALTH_BOOST, StatusEffects.LUCK);
+
+        // НЕЗЕР
+        put(Items.NETHER_BRICKS, StatusEffects.FIRE_RESISTANCE, StatusEffects.STRENGTH, StatusEffects.WITHER);
+
+        // ЖИДКОСТИ
+        put(Items.MILK_BUCKET, StatusEffects.SATURATION, StatusEffects.ABSORPTION, StatusEffects.WEAKNESS);
+        put(Items.HONEY_BOTTLE, StatusEffects.INSTANT_HEALTH, StatusEffects.SATURATION, StatusEffects.SLOWNESS);
+
+        // ЭНДЕР
+        put(Items.CHORUS_FRUIT, StatusEffects.LEVITATION, StatusEffects.NAUSEA, StatusEffects.INVISIBILITY);
+        put(Items.ENDER_PEARL, StatusEffects.SPEED, StatusEffects.LEVITATION, StatusEffects.WEAKNESS);
+
+        // МОБ ДРОПЫ
+        put(Items.ROTTEN_FLESH, StatusEffects.HUNGER, StatusEffects.STRENGTH, StatusEffects.POISON);
+        put(Items.BONE, StatusEffects.WEAKNESS, StatusEffects.RESISTANCE);
+        put(Items.STRING, StatusEffects.SLOWNESS, StatusEffects.WEAKNESS, StatusEffects.INVISIBILITY);
+        put(Items.FEATHER, StatusEffects.SLOW_FALLING, StatusEffects.SPEED, StatusEffects.WEAKNESS);
+
+        // ПЧЁЛЫ
+        put(Items.HONEYCOMB, StatusEffects.RESISTANCE, StatusEffects.SLOWNESS, StatusEffects.ABSORPTION);
     }
 
     private static void put(Item item, StatusEffect... effects) {
