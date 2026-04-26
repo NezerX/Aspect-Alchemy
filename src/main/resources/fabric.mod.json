@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "aspect-alchemy",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"name": "Aspect Alchemy",
 	"description": "Brew unique potions by combining alchemical aspects of Minecraft items!",
 	"authors": [

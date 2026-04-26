@@ -1,5 +1,8 @@
 package nezerx.aspectalchemy.block;
 
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.sound.SoundCategory;
 import java.util.List;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import nezerx.aspectalchemy.block.entity.AspectCauldronBlockEntity;
@@ -161,6 +164,46 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (world.isClient) return;
+
+        // ── Брошенный предмет ─────────────────────────────────────────────────
+        if (entity instanceof ItemEntity itemEntity) {
+            ItemStack dropped = itemEntity.getStack();
+
+            // Котёл должен кипеть, и предмет должен быть ингредиентом
+            if (!dropped.isEmpty()
+                    && AspectAlchemyData.ASPECT_MAP.containsKey(dropped.getItem())) {
+
+                BlockEntity be = world.getBlockEntity(pos);
+                if (!(be instanceof AspectCauldronBlockEntity cauldron)) return;
+
+                if (!cauldron.isBoiling()) {
+                    // Не кипит — выталкиваем предмет вверх, чтобы не засасывало в бесконечный цикл
+                    itemEntity.setVelocity(0, 0.2, 0);
+                    return;
+                }
+
+                if (!cauldron.canAddIngredient()) {
+                    // Котёл уже полон — тоже выталкиваем
+                    itemEntity.setVelocity(0, 0.2, 0);
+                    return;
+                }
+
+                // Добавляем ингредиент
+                if (cauldron.addIngredient(dropped)) {
+                    // addIngredient берёт 1 штуку, уменьшаем стак вручную
+                    dropped.decrement(1);
+                    if (dropped.isEmpty()) {
+                        itemEntity.discard();
+                    }
+                    world.playSound(null, pos,
+                            SoundEvents.ENTITY_GENERIC_SPLASH,
+                            SoundCategory.BLOCKS, 0.5f, 1.0f);
+                }
+            }
+            return; // не обрабатываем дальше — это предмет, не моб
+        }
+
+        // ── Живая сущность ────────────────────────────────────────────────────
         if (!(entity instanceof LivingEntity living)) return;
 
         if (living.isOnFire()) {
@@ -189,7 +232,6 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
             ));
         }
     }
-
     // ── Вспомогательный метод: уменьшить уровень котла ───────────────────────
 
     private void decreaseCauldronLevel(BlockState state, World world, BlockPos pos, AspectCauldronBlockEntity cauldron) {
