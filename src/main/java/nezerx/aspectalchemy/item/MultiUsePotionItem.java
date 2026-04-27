@@ -97,16 +97,6 @@ public class MultiUsePotionItem extends PotionItem {
     }
 
     @Override
-    public int getItemBarStep(ItemStack stack) {
-        return Math.round(13.0F * getSipsLeft(stack) / maxSips); // 13 - максимальная длина UI-полоски
-    }
-
-    @Override
-    public int getItemBarColor(ItemStack stack) {
-        return 0x00FF00; // Ярко-зеленый цвет полоски
-    }
-
-    @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
         int sips = getSipsLeft(stack);
