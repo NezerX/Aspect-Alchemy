@@ -89,13 +89,6 @@ public class MultiUsePotionItem extends PotionItem {
         return stack;
     }
 
-    // --- Отрисовка полоски ---
-
-    @Override
-    public boolean isItemBarVisible(ItemStack stack) {
-        return getSipsLeft(stack) < maxSips;
-    }
-
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);

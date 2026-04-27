@@ -5,7 +5,8 @@
   "item.aspectalchemy.potion.prefix.harmful": "Bane of",
   "item.aspectalchemy.potion.conjunction": "and",
   "item.aspectalchemy.tooltip.aspects": "Discovered aspects:",
-
+  "effect.aspectalchemy.declined.wither": "Wither",
+  "effect.aspectalchemy.declined.invisibility": "Invisibility",
   "effect.aspectalchemy.declined.speed": "Speed",
   "effect.aspectalchemy.declined.jump_boost": "Leaping",
   "effect.aspectalchemy.declined.mining_fatigue": "Mining Fatigue",
