@@ -1,5 +1,15 @@
 package nezerx.aspectalchemy.block.entity;
 
+import nezerx.aspectalchemy.block.AspectCauldronBlock;
+import net.minecraft.world.World;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.block.Blocks;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.math.Box;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import nezerx.aspectalchemy.AspectAlchemyMod; // Убедись, что путь верный
 import net.minecraft.item.DyeItem;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -30,6 +40,8 @@ public class AspectCauldronBlockEntity extends BlockEntity {
 
     private ItemStack loadedDye = ItemStack.EMPTY;
 
+    private Box itemCollectionBox;
+
     private List<StatusEffectInstance> cachedEffects = null;
     private Integer cachedWaterColor = null;
 
@@ -41,8 +53,109 @@ public class AspectCauldronBlockEntity extends BlockEntity {
 
     private static final int VANILLA_WATER_COLOR = 0x3F76E4;
 
+    public static void tick(World world, BlockPos pos, BlockState state, AspectCauldronBlockEntity be) {
+        if (world.isClient) return;
+
+        // Нагрев
+        BlockState below = world.getBlockState(pos.down());
+        boolean hasHeat = below.isOf(Blocks.CAMPFIRE) || below.isOf(Blocks.FIRE)
+                || below.isOf(Blocks.SOUL_FIRE) || below.isOf(Blocks.LAVA)
+                || below.isOf(Blocks.MAGMA_BLOCK);
+
+        boolean changed = be.tickHeat(hasHeat);
+        if (changed) {
+            boolean shouldBoil = be.isBoiling();
+            if (state.get(AspectCauldronBlock.BOILING) != shouldBoil) {
+                world.setBlockState(pos, state.with(AspectCauldronBlock.BOILING, shouldBoil), Block.NOTIFY_LISTENERS);
+            }
+        }
+
+        // Предметы — каждые 10 тиков
+        if (world.getTime() % 10 != 0) return;
+
+        // Большая Box — вся внутренность котла
+        Box box = be.itemCollectionBox;
+        List<ItemEntity> items = world.getEntitiesByClass(ItemEntity.class, box, e -> !e.getStack().isEmpty());
+
+        for (ItemEntity itemEntity : items) {
+            ItemStack stack = itemEntity.getStack();
+
+            // Ингредиенты
+            if (AspectAlchemyData.ASPECT_MAP.containsKey(stack.getItem())) {
+                if (!be.isBoiling() || !be.canAddIngredient()) continue;
+                if (be.addIngredient(stack)) {
+                    stack.decrement(1);
+                    if (stack.isEmpty()) itemEntity.discard();
+                    else itemEntity.setStack(stack);
+                    world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.BLOCKS, 0.5f, 1.0f);
+                }
+                continue;
+            }
+
+            // Краситель
+            if (stack.getItem() instanceof DyeItem && !be.hasLoadedDye()) {
+                be.loadDye(stack);
+                stack.decrement(1);
+                if (stack.isEmpty()) itemEntity.discard();
+                else itemEntity.setStack(stack);
+                world.playSound(null, pos, SoundEvents.ITEM_DYE_USE, SoundCategory.BLOCKS, 0.8f, 1.0f);
+                continue;
+            }
+
+            // Окрашивание
+            if (be.hasLoadedDye() && AspectAlchemyMod.DYEABLE_ITEMS.contains(stack.getItem())) {
+                DyeColor color = be.getLoadedDyeColor();
+                String itemId = Registries.ITEM.getId(stack.getItem()).getPath();
+                int maxCount = (itemId.endsWith("_banner") || itemId.endsWith("_carpet")) ? 64 : 16;
+                int toDye = Math.min(stack.getCount(), maxCount);
+
+                // getDyedItem живёт в AspectCauldronBlock — нужен доступ
+                if (world.getBlockState(pos).getBlock() instanceof AspectCauldronBlock block) {
+                    Item dyedItem = block.getDyedItem(stack.getItem(), color);
+                    if (dyedItem != Items.AIR) {
+                        ItemStack result = new ItemStack(dyedItem, toDye);
+                        stack.decrement(toDye);
+                        if (stack.isEmpty()) itemEntity.discard();
+                        else itemEntity.setStack(stack);
+                        ItemEntity output = new ItemEntity(world, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), result);
+                        output.setVelocity(0, 0.1, 0);
+                        world.spawnEntity(output);
+                        be.clearLoadedDye();
+                        block.decreaseCauldronLevel(state, world, pos, be);
+                        world.playSound(null, pos, SoundEvents.ITEM_DYE_USE, SoundCategory.BLOCKS, 0.8f, 1.0f);
+                    }
+                }
+            }
+            // Стрелы
+            if (stack.getItem() == Items.ARROW && be.canTipArrows()) {
+                int tipped = be.tipArrows(stack.getCount());
+                if (tipped > 0) {
+                    ItemStack tippedStack = be.createTippedArrowStack(tipped);
+                    stack.decrement(tipped);
+                    if (stack.isEmpty()) itemEntity.discard();
+                    else itemEntity.setStack(stack);
+                    ItemEntity output = new ItemEntity(world, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), tippedStack);
+                    output.setVelocity(0, 0.1, 0);
+                    world.spawnEntity(output);
+                    if (be.consumePendingLevelDecrease()) {
+                        if (world.getBlockState(pos).getBlock() instanceof AspectCauldronBlock block) {
+                            block.decreaseCauldronLevel(state, world, pos, be);
+                        }
+                    }
+                    world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.BLOCKS, 0.5f, 1.2f);
+                    continue;
+                }
+            }
+        }
+    }
+
     public AspectCauldronBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ASPECT_CAULDRON, pos, state);
+        // Реальные внутренние размеры котла — чуть уже, чем раньше
+        this.itemCollectionBox = new Box(
+                pos.getX() + 0.2, pos.getY() + 0.3, pos.getZ() + 0.2,
+                pos.getX() + 0.8, pos.getY() + 0.9, pos.getZ() + 0.8
+        );
     }
 
     @Override
@@ -77,6 +190,7 @@ public class AspectCauldronBlockEntity extends BlockEntity {
         }
 
         heatTicks = nbt.getInt("HeatTicks");
+        pendingLevelDecrease = nbt.getBoolean("PendingLevelDecrease");
         cachedEffects = null;
         cachedWaterColor = null;
 
@@ -91,14 +205,17 @@ public class AspectCauldronBlockEntity extends BlockEntity {
         if (hasHeatBelow) {
             if (heatTicks < BOIL_TICKS) {
                 heatTicks++;
-                markDirty();
-                return heatTicks == BOIL_TICKS; // стал кипеть
+                // markDirty() убран — не сохраняем каждый тик
+                if (heatTicks == BOIL_TICKS) {
+                    markDirty(); // сохраняем только в момент закипания
+                    return true;
+                }
             }
         } else {
             if (heatTicks > 0) {
                 heatTicks = 0;
-                markDirty();
-                return true; // перестал кипеть
+                markDirty(); // сохраняем только при остановке
+                return true;
             }
         }
         return false;
@@ -171,12 +288,7 @@ public class AspectCauldronBlockEntity extends BlockEntity {
 
     @Override
     public void markDirty() {
-        cachedEffects = null;
-        cachedWaterColor = null;
-        super.markDirty();
-        if (world != null && !world.isClient) {
-            world.updateListeners(pos, getCachedState(), getCachedState(), Block.NOTIFY_ALL);
-        }
+        super.markDirty(); // только запись на диск
     }
 
     // ── Эффекты ───────────────────────────────────────────────────────────────
@@ -342,6 +454,7 @@ public class AspectCauldronBlockEntity extends BlockEntity {
         super.writeNbt(nbt);
         nbt.putInt("TippedArrowsUsed", tippedArrowsUsed);
         nbt.putInt("HeatTicks", heatTicks);
+        nbt.putBoolean("PendingLevelDecrease", pendingLevelDecrease);
         NbtList list = new NbtList();
         for (int i = 0; i < inventory.size(); i++) {
             if (!inventory.get(i).isEmpty()) {

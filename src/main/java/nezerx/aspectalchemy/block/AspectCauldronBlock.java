@@ -43,13 +43,16 @@ import net.minecraft.world.WorldAccess;
 import nezerx.aspectalchemy.init.ModBlockEntities;
 import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
-import java.util.Comparator;
+import nezerx.aspectalchemy.AspectAlchemyMod;
 
 import java.util.Collections;
 
 public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEntityProvider {
     public static final IntProperty LEVEL = IntProperty.of("level", 1, 3);
     public static final BooleanProperty BOILING = BooleanProperty.of("boiling");
+    private static final Text MSG_EMPTY = Text.translatable("block.aspectalchemy.cauldron.empty");
+    private static final Text MSG_FULL = Text.translatable("block.aspectalchemy.cauldron.full");
+    private static final Text MSG_NOT_BOILING = Text.translatable("block.aspectalchemy.cauldron.not_boiling");
 
     private static final VoxelShape OUTLINE_SHAPE =
             Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 16.0, 14.0);
@@ -110,7 +113,7 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
                     AspectCauldronBlock::tickParticles;
         }
         return (BlockEntityTicker<T>) (BlockEntityTicker<AspectCauldronBlockEntity>)
-                AspectCauldronBlock::tickCauldron;
+                (w, p, s, b) -> AspectCauldronBlockEntity.tick(w, p, s, b);
     }
 
     private static void tickParticles(World world, BlockPos pos, BlockState state, AspectCauldronBlockEntity be) {
@@ -137,27 +140,6 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
         }
     }
 
-    private static void tickCauldron(World world, BlockPos pos, BlockState state, AspectCauldronBlockEntity be) {
-        boolean hasHeat = isHeatSource(world.getBlockState(pos.down()));
-        boolean changed = be.tickHeat(hasHeat);
-
-        if (changed) {
-            boolean shouldBoil = be.isBoiling();
-            if (state.get(AspectCauldronBlock.BOILING) != shouldBoil) {
-                world.setBlockState(pos, state.with(AspectCauldronBlock.BOILING, shouldBoil),
-                        Block.NOTIFY_LISTENERS);
-            }
-        }
-    }
-
-    private static boolean isHeatSource(BlockState stateBelow) {
-        return stateBelow.isOf(Blocks.CAMPFIRE)
-                || stateBelow.isOf(Blocks.FIRE)
-                || stateBelow.isOf(Blocks.SOUL_FIRE)
-                || stateBelow.isOf(Blocks.LAVA)
-                || stateBelow.isOf(Blocks.MAGMA_BLOCK);
-    }
-
     @Override
     public void onBlockAdded(BlockState state, World world, BlockPos pos, BlockState oldState, boolean notify) {
     }
@@ -170,117 +152,40 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+        // Тормозим предмет физически — это нормально оставить
+        if (entity instanceof ItemEntity item) {
+            item.setVelocity(item.getVelocity().multiply(0.5, 0.8, 0.5));
+            return; // и сразу выходим, tick() сам разберётся
+        }
+
         if (world.isClient) return;
 
-        // ── Брошенный предмет ─────────────────────────────────────────────────
-        if (entity instanceof ItemEntity itemEntity) {
-            ItemStack dropped = itemEntity.getStack();
-            if (dropped.isEmpty()) return;
+        BlockEntity be = world.getBlockEntity(pos);
+        if (!(be instanceof AspectCauldronBlockEntity cauldron)) return;
 
-            BlockEntity be = world.getBlockEntity(pos);
-            if (!(be instanceof AspectCauldronBlockEntity cauldron)) return;
-
-            // ── Ингредиенты ───────────────────────────────────────────────────
-            if (AspectAlchemyData.ASPECT_MAP.containsKey(dropped.getItem())) {
-                if (!cauldron.isBoiling()) {
-                    itemEntity.setVelocity(0, 0.2, 0);
-                    return;
-                }
-                if (!cauldron.canAddIngredient()) {
-                    itemEntity.setVelocity(0, 0.2, 0);
-                    return;
-                }
-                if (cauldron.addIngredient(dropped)) {
-                    dropped.decrement(1);
-                    if (dropped.isEmpty()) itemEntity.discard();
-                    world.playSound(null, pos,
-                            SoundEvents.ENTITY_GENERIC_SPLASH,
-                            SoundCategory.BLOCKS, 0.5f, 1.0f);
-                }
-                return;
-            }
-
-            // ── Стрелы ────────────────────────────────────────────────────────
-            if (dropped.getItem() == Items.ARROW) {
-                if (!cauldron.isBoiling()) { itemEntity.setVelocity(0, 0.2, 0); return; }
-                if (!cauldron.canTipArrows()) { itemEntity.setVelocity(0, 0.2, 0); return; }
-                int tipped = cauldron.tipArrows(dropped.getCount());
-                if (tipped > 0) {
-                    dropped.decrement(tipped);
-                    if (dropped.isEmpty()) itemEntity.discard();
-                    ItemStack tippedStack = cauldron.createTippedArrowStack(tipped);
-                    ItemEntity result = new ItemEntity(world, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), tippedStack);
-                    world.spawnEntity(result);
-                    if (cauldron.consumePendingLevelDecrease()) decreaseCauldronLevel(state, world, pos, cauldron);
-                    world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.BLOCKS, 0.5f, 1.2f);
-                }
-                return;
-            }
-
-            // ── Красители: выпавшие предметы ────────────────────────────────
-            if (dropped.getItem() instanceof DyeItem) {
-                if (!cauldron.hasLoadedDye() && cauldron.loadDye(dropped)) {
-                    dropped.decrement(1);
-                    if (dropped.isEmpty()) itemEntity.discard();
-
-                    world.playSound(null, pos, SoundEvents.ITEM_DYE_USE, SoundCategory.BLOCKS, 0.8f, 1.0f);
-                }
-                return;
-            }
-            if (isDyeableItem(dropped.getItem()) && cauldron.hasLoadedDye()) {
-                DyeColor color = cauldron.getLoadedDyeColor();
-                String droppedId = Registries.ITEM.getId(dropped.getItem()).getPath();
-                int maxCount = (droppedId.endsWith("_banner") || droppedId.endsWith("_carpet")) ? 64 : 16;
-                int toDye = Math.min(dropped.getCount(), maxCount);
-                Item dyedItem = getDyedItem(dropped.getItem(), color);
-                ItemStack result = new ItemStack(dyedItem, toDye);
-                dropped.decrement(toDye);
-                if (dropped.isEmpty()) itemEntity.discard();
-                else itemEntity.setStack(dropped);
-                ItemEntity output = new ItemEntity(world, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), result);
-                output.setVelocity(itemEntity.getVelocity());
-
-                world.spawnEntity(output);
-                cauldron.clearLoadedDye();
-                if (!world.isClient) decreaseCauldronLevel(state, world, pos, cauldron);
-                world.playSound(null, pos, SoundEvents.ITEM_DYE_USE, SoundCategory.BLOCKS, 0.8f, 1.0f);
-                return;
-            }
-            return;
-        }
-
-        // ── Живая сущность ────────────────────────────────────────────────────
         if (!(entity instanceof LivingEntity living)) return;
 
-        if (living.isOnFire()) {
-            living.extinguish();
-        }
+        if (living.isOnFire()) living.extinguish();
 
-        if (state.get(BOILING)
-                && !living.isFireImmune()
+        if (state.get(BOILING) && !living.isFireImmune()
                 && !EnchantmentHelper.hasFrostWalker(living)
                 && world.getTime() % 20 == 0) {
             entity.damage(world.getDamageSources().hotFloor(), 1.0F);
         }
 
         if (world.getTime() % 20 != 0) return;
-
-        BlockEntity be = world.getBlockEntity(pos);
-        if (!(be instanceof AspectCauldronBlockEntity cauldron)) return;
         if (cauldron.getIngredientCount() == 0) return;
 
         for (StatusEffectInstance effect : cauldron.getActiveEffects()) {
             living.addStatusEffect(new StatusEffectInstance(
-                    effect.getEffectType(),
-                    60,
-                    effect.getAmplifier(),
+                    effect.getEffectType(), 60, effect.getAmplifier(),
                     false, false, true
             ));
         }
     }
     // ── Вспомогательный метод: уменьшить уровень котла ───────────────────────
 
-    private void decreaseCauldronLevel(BlockState state, World world, BlockPos pos, AspectCauldronBlockEntity cauldron) {
+    public void decreaseCauldronLevel(BlockState state, World world, BlockPos pos, AspectCauldronBlockEntity cauldron) {
         int level = state.get(LEVEL);
         if (level > 1) {
             world.setBlockState(pos, state.with(LEVEL, level - 1));
@@ -291,9 +196,6 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
     }
 
     // ── Вспомогательный метод: вывести сообщение игроку (action bar) ─────────
-    // Выделен отдельный метод для вывода сообщений.
-    // Это удобно при отладке: все сообщения об отказе проходят через одну точку.
-    // Чтобы вместо action bar использовать чат — заменить true на false.
     private void sendMsg(World world, PlayerEntity player, String translationKey) {
         if (!world.isClient) {
             player.sendMessage(Text.translatable(translationKey), true);
@@ -387,7 +289,7 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
 
             // [ИЗМЕНЕНИЕ] Котёл не кипит — ингредиент не добавить
             if (!cauldron.isBoiling()) {
-                sendMsg(world, player, "block.aspectalchemy.cauldron.not_boiling");
+                player.sendMessage(MSG_NOT_BOILING, true); // вместо sendMsg(..., "key")
                 return ActionResult.CONSUME;
             }
 
@@ -521,16 +423,10 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
     }
 
     private boolean isDyeableItem(Item item) {
-        String id = Registries.ITEM.getId(item).getPath();
-        return id.endsWith("_wool")
-                || id.endsWith("_terracotta")
-                || id.endsWith("_shulker_box")
-                || id.endsWith("_banner")
-                || id.endsWith("_candle")
-                || id.endsWith("_carpet");
+        return AspectAlchemyMod.DYEABLE_ITEMS.contains(item);
     }
 
-    private Item getDyedItem(Item baseItem, DyeColor color) {
+    public Item getDyedItem(Item baseItem, DyeColor color) {
         String id = Registries.ITEM.getId(baseItem).getPath();
         String newId;
 
@@ -539,7 +435,8 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
         else if (id.endsWith("_shulker_box")) newId = color.asString() + "_shulker_box";
         else if (id.endsWith("_banner")) newId = color.asString() + "_banner";
         else if (id.endsWith("_carpet")) newId = color.asString() + "_carpet";
-        else if (id.endsWith("_candle")) newId = color.asString() + "_candle";
+        else if (id.endsWith("_candle") || id.equals("candle")) newId = color.getName() + "_candle";
+        //надо пофиксить: св
         else return baseItem;
 
         return getByName(newId);
