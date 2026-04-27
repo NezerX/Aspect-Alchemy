@@ -12,6 +12,7 @@ import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -28,6 +29,9 @@ public class AspectCauldronBlockEntity extends BlockEntity {
 
     private List<StatusEffectInstance> cachedEffects = null;
     private Integer cachedWaterColor = null;
+
+    private int tippedArrowsUsed = 0;
+    private static final int ARROWS_PER_LEVEL = 32;
 
     private int heatTicks = 0;
     private static final int BOIL_TICKS = 200; // 10 секунд
@@ -52,6 +56,7 @@ public class AspectCauldronBlockEntity extends BlockEntity {
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
+        tippedArrowsUsed = nbt.getInt("TippedArrowsUsed");
         inventory.clear();
         NbtList list = nbt.getList("Items", NbtElement.COMPOUND_TYPE);
         for (int i = 0; i < list.size(); i++) {
@@ -173,9 +178,9 @@ public class AspectCauldronBlockEntity extends BlockEntity {
         for (Map.Entry<StatusEffect, Integer> entry : counts.entrySet()) {
             int count = entry.getValue();
             if (count >= 2) {
+                int amplifier = Math.min(count - 1, 4); // I=1, II=2, III=3... кап V
                 result.add(new StatusEffectInstance(
-                        entry.getKey(), 3600,
-                        count >= 3 ? 1 : 0,
+                        entry.getKey(), 3600, amplifier,
                         false, false, true
                 ));
             }
@@ -307,6 +312,7 @@ public class AspectCauldronBlockEntity extends BlockEntity {
     @Override
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
+        nbt.putInt("TippedArrowsUsed", tippedArrowsUsed);
         nbt.putInt("HeatTicks", heatTicks);
         NbtList list = new NbtList();
         for (int i = 0; i < inventory.size(); i++) {
@@ -318,5 +324,98 @@ public class AspectCauldronBlockEntity extends BlockEntity {
             }
         }
         nbt.put("Items", list);
+    }
+
+    public boolean canTipArrows() {
+        return !getActiveEffects().isEmpty() && tippedArrowsUsed < ARROWS_PER_LEVEL;
+    }
+
+    public int getRemainingArrows() {
+        return ARROWS_PER_LEVEL - tippedArrowsUsed;
+    }
+
+    private boolean pendingLevelDecrease = false;
+
+    public boolean consumePendingLevelDecrease() {
+        if (pendingLevelDecrease) {
+            pendingLevelDecrease = false;
+            return true;
+        }
+        return false;
+    }
+    /** Возвращает сколько стрел реально пропитали (может быть меньше запрошенного) */
+    public int tipArrows(int count) {
+        int canTip = Math.min(count, getRemainingArrows());
+        if (canTip <= 0) return 0;
+        tippedArrowsUsed += canTip;
+        if (tippedArrowsUsed >= ARROWS_PER_LEVEL) {
+            tippedArrowsUsed = 0;
+            pendingLevelDecrease = true;
+        }
+        invalidateAndSync();
+        return canTip;
+    }
+
+    public ItemStack createTippedArrowStack(int count) {
+        ensureEffectsCached();
+        ItemStack arrow = new ItemStack(Items.TIPPED_ARROW, count);
+
+        if (cachedEffects == null || cachedEffects.isEmpty()) return arrow;
+
+        PotionUtil.setPotion(arrow, Potions.EMPTY);
+        PotionUtil.setCustomPotionEffects(arrow, cachedEffects);
+        arrow.getOrCreateNbt().putInt("CustomPotionColor", getWaterColor());
+        arrow.setCustomName(buildArrowName());
+        return arrow;
+    }
+
+    private MutableText buildArrowName() {
+        ensureEffectsCached();
+
+        List<StatusEffectInstance> sorted = new ArrayList<>(cachedEffects);
+        sorted.sort(Comparator
+                .comparingInt(StatusEffectInstance::getAmplifier).reversed()
+                .thenComparing(eff -> eff.getEffectType().isBeneficial(), Comparator.reverseOrder())
+                .thenComparingInt(StatusEffectInstance::getDuration).reversed());
+
+        List<StatusEffectInstance> primary = new ArrayList<>();
+        int maxAmplifier = sorted.get(0).getAmplifier();
+        for (StatusEffectInstance eff : sorted) {
+            if (eff.getAmplifier() == maxAmplifier) primary.add(eff);
+            else break;
+        }
+
+        boolean hasBeneficial = primary.stream().anyMatch(e -> e.getEffectType().isBeneficial());
+        String prefixKey = hasBeneficial
+                ? "item.aspectalchemy.arrow.prefix.beneficial"
+                : "item.aspectalchemy.arrow.prefix.harmful";
+
+        Formatting color = Formatting.RED; // стрелы — красный, чтобы отличались от зелий
+
+        MutableText name = Text.translatable(prefixKey)
+                .append(Text.literal(" "))
+                .formatted(color);
+
+        for (int i = 0; i < primary.size(); i++) {
+            StatusEffectInstance eff = primary.get(i);
+
+            String originalKey = eff.getEffectType().getTranslationKey();
+            String declinedKey = originalKey.contains("minecraft")
+                    ? originalKey.replace("effect.minecraft.", "effect.aspectalchemy.declined.")
+                    : "effect.aspectalchemy.declined." + originalKey.substring(originalKey.lastIndexOf('.') + 1);
+
+            name.append(Text.translatable(declinedKey));
+
+            if (eff.getAmplifier() > 0) {
+                name.append(Text.literal(" " + toRoman(eff.getAmplifier() + 1)));
+            }
+            if (i < primary.size() - 1) {
+                name.append(Text.literal(" "))
+                        .append(Text.translatable("item.aspectalchemy.potion.conjunction"))
+                        .append(Text.literal(" "));
+            }
+        }
+
+        return name.styled(style -> style.withItalic(false).withColor(color));
     }
 }

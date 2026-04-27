@@ -8,7 +8,7 @@
   "effect.aspectalchemy.declined.wither": "Wither",
   "effect.aspectalchemy.declined.invisibility": "Invisibility",
   "effect.aspectalchemy.declined.speed": "Speed",
-  "effect.aspectalchemy.declined.jump_boost": "Leaping",
+  "effect.aspectalchemy.declined.jump_boost": "Jump Boost",
   "effect.aspectalchemy.declined.mining_fatigue": "Mining Fatigue",
   "effect.aspectalchemy.declined.luck": "Luck",
   "effect.aspectalchemy.declined.slow_falling": "Slow Falling",
@@ -20,7 +20,7 @@
   "effect.aspectalchemy.declined.glowing": "Glowing",
   "effect.aspectalchemy.declined.haste": "Haste",
   "effect.aspectalchemy.declined.night_vision": "Night Vision",
-  "effect.aspectalchemy.declined.instant_damage": "Harming",
+  "effect.aspectalchemy.declined.instant_damage": "Instant Damage",
   "effect.aspectalchemy.declined.hunger": "Hunger",
   "effect.aspectalchemy.declined.water_breathing": "Water Breathing",
   "effect.aspectalchemy.declined.blindness": "Blindness",
@@ -44,5 +44,7 @@
   "block.aspectalchemy.cauldron.bottle_full": "The bottle is already full",
   "block.aspectalchemy.cauldron.potion_mismatch": "The potions in the cauldron and bottle don't match",
   "block.aspectalchemy.cauldron.not_boiling": "The cauldron is not boiling",
-  "block.aspectalchemy.cauldron.full": "The cauldron is full"
+  "block.aspectalchemy.cauldron.full": "The cauldron is full",
+  "item.aspectalchemy.arrow.prefix.beneficial": "Arrow of",
+  "item.aspectalchemy.arrow.prefix.harmful": "Poisoned Arrow of"
 }

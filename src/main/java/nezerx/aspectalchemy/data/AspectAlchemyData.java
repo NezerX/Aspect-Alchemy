@@ -4,8 +4,6 @@ import net.minecraft.item.Items;
 import net.minecraft.item.Item;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffects;
-
-import java.io.ObjectInputFilter;
 import java.util.*;
 
 public class AspectAlchemyData {
@@ -38,7 +36,7 @@ public class AspectAlchemyData {
         put(Items.AMETHYST_SHARD, StatusEffects.RESISTANCE, StatusEffects.NIGHT_VISION, StatusEffects.LUCK, StatusEffects.SLOWNESS);
         put(Items.QUARTZ, StatusEffects.HASTE, StatusEffects.GLOWING, StatusEffects.WEAKNESS);
         put(Items.COAL, StatusEffects.STRENGTH, StatusEffects.HUNGER, StatusEffects.INSTANT_DAMAGE);
-        put(Items.TORCHFLOWER, StatusEffects.NIGHT_VISION, StatusEffects.NIGHT_VISION, StatusEffects.REGENERATION, StatusEffects.LUCK);
+        put(Items.TORCHFLOWER, StatusEffects.REGENERATION, StatusEffects.NIGHT_VISION, StatusEffects.REGENERATION, StatusEffects.LUCK);
         put(Items.EGG, StatusEffects.LEVITATION, StatusEffects.WEAKNESS, StatusEffects.INSTANT_HEALTH);
         put(Items.SOUL_SAND, StatusEffects.SLOWNESS, StatusEffects.WITHER, StatusEffects.UNLUCK, StatusEffects.INVISIBILITY);
         put(Items.CLAY_BALL, StatusEffects.SLOWNESS, StatusEffects.RESISTANCE, StatusEffects.INSTANT_HEALTH);

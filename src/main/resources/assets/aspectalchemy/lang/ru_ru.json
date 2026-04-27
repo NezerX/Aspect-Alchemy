@@ -5,6 +5,8 @@
   "item.aspectalchemy.potion.prefix.harmful": "Яд",
   "item.aspectalchemy.potion.conjunction": "и",
   "item.aspectalchemy.tooltip.aspects": "Открытые аспекты:",
+  "effect.aspectalchemy.declined.wither": "Иссушения",
+  "effect.aspectalchemy.declined.invisibility": "Invisibility",
   "effect.aspectalchemy.declined.speed": "Скорости",
   "effect.aspectalchemy.declined.jump_boost": "Прыгучести",
   "effect.aspectalchemy.declined.mining_fatigue": "Утомления",
@@ -17,7 +19,6 @@
   "effect.aspectalchemy.declined.fire_resistance": "Огнестойкости",
   "effect.aspectalchemy.declined.glowing": "Свечения",
   "effect.aspectalchemy.declined.haste": "Спешки",
-  "effect.aspectalchemy.declined.wither": "Иссушения",
   "effect.aspectalchemy.declined.night_vision": "Ночного зрения",
   "effect.aspectalchemy.declined.instant_damage": "Мгновенного урона",
   "effect.aspectalchemy.declined.hunger": "Голода",
@@ -43,5 +44,7 @@
   "block.aspectalchemy.cauldron.bottle_full": "Бутылочка уже полна",
   "block.aspectalchemy.cauldron.potion_mismatch": "Зелья в котле и бутылочке не совпадают",
   "block.aspectalchemy.cauldron.not_boiling": "Котёл не кипит",
-  "block.aspectalchemy.cauldron.full": "Котёл заполнен"
+  "block.aspectalchemy.cauldron.full": "Котёл заполнен",
+  "item.aspectalchemy.arrow.prefix.beneficial": "Стрела",
+  "item.aspectalchemy.arrow.prefix.harmful": "Отравленная Стрела"
 }

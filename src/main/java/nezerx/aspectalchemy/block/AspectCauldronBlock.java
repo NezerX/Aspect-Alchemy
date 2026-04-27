@@ -168,39 +168,63 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
         // ── Брошенный предмет ─────────────────────────────────────────────────
         if (entity instanceof ItemEntity itemEntity) {
             ItemStack dropped = itemEntity.getStack();
+            if (dropped.isEmpty()) return;
 
-            // Котёл должен кипеть, и предмет должен быть ингредиентом
-            if (!dropped.isEmpty()
-                    && AspectAlchemyData.ASPECT_MAP.containsKey(dropped.getItem())) {
+            BlockEntity be = world.getBlockEntity(pos);
+            if (!(be instanceof AspectCauldronBlockEntity cauldron)) return;
 
-                BlockEntity be = world.getBlockEntity(pos);
-                if (!(be instanceof AspectCauldronBlockEntity cauldron)) return;
-
+            // ── Ингредиенты ───────────────────────────────────────────────────
+            if (AspectAlchemyData.ASPECT_MAP.containsKey(dropped.getItem())) {
                 if (!cauldron.isBoiling()) {
-                    // Не кипит — выталкиваем предмет вверх, чтобы не засасывало в бесконечный цикл
                     itemEntity.setVelocity(0, 0.2, 0);
                     return;
                 }
-
                 if (!cauldron.canAddIngredient()) {
-                    // Котёл уже полон — тоже выталкиваем.
                     itemEntity.setVelocity(0, 0.2, 0);
                     return;
                 }
-
-                // Добавляем ингредиент
                 if (cauldron.addIngredient(dropped)) {
-                    // addIngredient берёт 1 штуку, уменьшаем стак вручную
                     dropped.decrement(1);
-                    if (dropped.isEmpty()) {
-                        itemEntity.discard();
-                    }
+                    if (dropped.isEmpty()) itemEntity.discard();
                     world.playSound(null, pos,
                             SoundEvents.ENTITY_GENERIC_SPLASH,
                             SoundCategory.BLOCKS, 0.5f, 1.0f);
                 }
+                return;
             }
-            return; // не обрабатываем дальше — это предмет, не моб
+
+            // ── Стрелы ────────────────────────────────────────────────────────
+            if (dropped.getItem() == Items.ARROW) {
+                if (!cauldron.isBoiling()) {
+                    itemEntity.setVelocity(0, 0.2, 0);
+                    return;
+                }
+                if (!cauldron.canTipArrows()) {
+                    itemEntity.setVelocity(0, 0.2, 0);
+                    return;
+                }
+                int tipped = cauldron.tipArrows(dropped.getCount());
+                if (tipped > 0) {
+                    dropped.decrement(tipped);
+                    if (dropped.isEmpty()) itemEntity.discard();
+
+                    ItemStack tippedStack = cauldron.createTippedArrowStack(tipped);
+                    ItemEntity result = new ItemEntity(world,
+                            itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(),
+                            tippedStack);
+                    world.spawnEntity(result);
+
+                    if (cauldron.consumePendingLevelDecrease()) {
+                        decreaseCauldronLevel(state, world, pos, cauldron);
+                    }
+                    world.playSound(null, pos,
+                            SoundEvents.ENTITY_GENERIC_SPLASH,
+                            SoundCategory.BLOCKS, 0.5f, 1.2f);
+                }
+                return;
+            }
+
+            return;
         }
 
         // ── Живая сущность ────────────────────────────────────────────────────
@@ -361,7 +385,44 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
             }
             return ActionResult.success(world.isClient);
         }
+        // ── Стрелы ───────────────────────────────────────────────────────────────
+        if (item == Items.ARROW) {
+            if (cauldron.getIngredientCount() == 0 || cauldron.getActiveEffects().isEmpty()) {
+                sendMsg(world, player, "block.aspectalchemy.cauldron.empty");
+                return ActionResult.CONSUME;
+            }
+            if (!cauldron.canTipArrows()) {
+                sendMsg(world, player, "block.aspectalchemy.cauldron.arrows_depleted");
+                return ActionResult.CONSUME;
+            }
 
+            if (!world.isClient) {
+                int inHand = stack.getCount();
+                int tipped = cauldron.tipArrows(inHand);
+
+                // Убираем обычные стрелы
+                if (!player.getAbilities().creativeMode) stack.decrement(tipped);
+
+                // Выдаём стрелы с эффектом
+                ItemStack tippedStack = new ItemStack(Items.TIPPED_ARROW, tipped);
+                net.minecraft.potion.PotionUtil.setPotion(tippedStack, net.minecraft.potion.Potions.EMPTY);
+                net.minecraft.potion.PotionUtil.setCustomPotionEffects(tippedStack, cauldron.getActiveEffects());
+                tippedStack.getOrCreateNbt().putInt("CustomPotionColor", cauldron.getWaterColor());
+
+                if (stack.isEmpty()) player.setStackInHand(hand, tippedStack);
+                else if (!player.getInventory().insertStack(tippedStack))
+                    player.dropItem(tippedStack, false);
+
+                // Проверяем, нужно ли уменьшить уровень
+                if (cauldron.consumePendingLevelDecrease()) {
+                    decreaseCauldronLevel(state, world, pos, cauldron);
+                }
+
+                world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_SPLASH,
+                        SoundCategory.BLOCKS, 0.4f, 1.2f);
+            }
+            return ActionResult.success(world.isClient);
+        }
         return ActionResult.PASS;
     }
 
