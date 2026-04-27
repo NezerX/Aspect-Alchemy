@@ -281,7 +281,6 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
                 // черпать можно и из некипящего котла.
                 if (!world.isClient) {
                     ItemStack potionStack = cauldron.createPotionStack(item);
-                    multiItem.setSipsLeft(potionStack, 1);
                     if (!player.getAbilities().creativeMode) stack.decrement(1);
                     if (stack.isEmpty()) player.setStackInHand(hand, potionStack);
                     else if (!player.getInventory().insertStack(potionStack)) player.dropItem(potionStack, false);

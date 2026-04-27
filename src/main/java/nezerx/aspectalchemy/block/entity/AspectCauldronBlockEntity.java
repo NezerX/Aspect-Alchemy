@@ -223,9 +223,9 @@ public class AspectCauldronBlockEntity extends BlockEntity {
         PotionUtil.setCustomPotionEffects(bottle, cachedEffects);
         bottle.getOrCreateNbt().putInt("CustomPotionColor", getWaterColor());
 
-        // Теперь устанавливаем только 1 глоток при создании из котла
-        if (targetPotionItem instanceof nezerx.aspectalchemy.item.MultiUsePotionItem) {
-            bottle.getOrCreateNbt().putInt("SipsLeft", 1);
+        // ↓ БЫЛО: bottle.getOrCreateNbt().putInt("SipsLeft", 1);
+        if (targetPotionItem instanceof nezerx.aspectalchemy.item.MultiUsePotionItem multiPotion) {
+            multiPotion.setSipsLeft(bottle, 1); // теперь CustomModelData тоже выставляется
         }
 
         List<StatusEffectInstance> sorted = new ArrayList<>(cachedEffects);
