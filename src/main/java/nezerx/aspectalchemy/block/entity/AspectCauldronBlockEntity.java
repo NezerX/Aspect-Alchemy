@@ -1,5 +1,6 @@
 package nezerx.aspectalchemy.block.entity;
 
+import net.minecraft.item.DyeItem;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -26,6 +27,8 @@ import java.util.*;
 
 public class AspectCauldronBlockEntity extends BlockEntity {
     private final DefaultedList<ItemStack> inventory = DefaultedList.ofSize(3, ItemStack.EMPTY);
+
+    private ItemStack loadedDye = ItemStack.EMPTY;
 
     private List<StatusEffectInstance> cachedEffects = null;
     private Integer cachedWaterColor = null;
@@ -66,6 +69,13 @@ public class AspectCauldronBlockEntity extends BlockEntity {
                 inventory.set(slotIdx, ItemStack.fromNbt(slot));
             }
         }
+
+        if (nbt.contains("LoadedDye", NbtElement.COMPOUND_TYPE)) {
+            loadedDye = ItemStack.fromNbt(nbt.getCompound("LoadedDye"));
+        } else {
+            loadedDye = ItemStack.EMPTY;
+        }
+
         heatTicks = nbt.getInt("HeatTicks");
         cachedEffects = null;
         cachedWaterColor = null;
@@ -132,6 +142,18 @@ public class AspectCauldronBlockEntity extends BlockEntity {
         invalidateAndSync();
     }
 
+    public boolean loadDye(ItemStack stack) {
+        if (!loadedDye.isEmpty() || !(stack.getItem() instanceof net.minecraft.item.DyeItem)) return false;
+        loadedDye = stack.copyWithCount(1);
+        invalidateAndSync();
+        return true;
+    }
+    public boolean hasLoadedDye() { return !loadedDye.isEmpty(); }
+    public net.minecraft.util.DyeColor getLoadedDyeColor() {
+        return loadedDye.isEmpty() ? null : ((net.minecraft.item.DyeItem) loadedDye.getItem()).getColor();
+    }
+    public void clearLoadedDye() { loadedDye = ItemStack.EMPTY; invalidateAndSync(); }
+
     public DefaultedList<ItemStack> getInventory() {
         return inventory;
     }
@@ -178,7 +200,7 @@ public class AspectCauldronBlockEntity extends BlockEntity {
         for (Map.Entry<StatusEffect, Integer> entry : counts.entrySet()) {
             int count = entry.getValue();
             if (count >= 2) {
-                int amplifier = Math.min(count - 1, 4); // I=1, II=2, III=3... кап V
+                int amplifier = Math.min(count - 2, 4); // I=1, II=2, III=3... кап V
                 result.add(new StatusEffectInstance(
                         entry.getKey(), 3600, amplifier,
                         false, false, true
@@ -192,6 +214,12 @@ public class AspectCauldronBlockEntity extends BlockEntity {
 
     public int getWaterColor() {
         if (cachedWaterColor != null) return cachedWaterColor;
+
+        // Если загружен краситель — показываем его цвет
+        if (!loadedDye.isEmpty() && loadedDye.getItem() instanceof DyeItem dyeItem) {
+            cachedWaterColor = dyeItem.getColor().getFireworkColor();
+            return cachedWaterColor;
+        }
 
         ensureEffectsCached();
 
@@ -324,6 +352,12 @@ public class AspectCauldronBlockEntity extends BlockEntity {
             }
         }
         nbt.put("Items", list);
+
+
+
+        if (!loadedDye.isEmpty()) {
+            nbt.put("LoadedDye", loadedDye.writeNbt(new NbtCompound()));
+        }
     }
 
     public boolean canTipArrows() {

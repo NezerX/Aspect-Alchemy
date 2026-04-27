@@ -1,5 +1,9 @@
 package nezerx.aspectalchemy.block;
 
+import net.minecraft.registry.Registries;
+import net.minecraft.item.DyeItem;
+import net.minecraft.util.DyeColor;
+import net.minecraft.util.Identifier;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.sound.SoundCategory;
@@ -20,6 +24,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.potion.PotionUtil;
 import net.minecraft.item.Item;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -37,6 +42,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import nezerx.aspectalchemy.init.ModBlockEntities;
 import org.jetbrains.annotations.Nullable;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 import java.util.Collections;
 
@@ -195,35 +202,50 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
 
             // ── Стрелы ────────────────────────────────────────────────────────
             if (dropped.getItem() == Items.ARROW) {
-                if (!cauldron.isBoiling()) {
-                    itemEntity.setVelocity(0, 0.2, 0);
-                    return;
-                }
-                if (!cauldron.canTipArrows()) {
-                    itemEntity.setVelocity(0, 0.2, 0);
-                    return;
-                }
+                if (!cauldron.isBoiling()) { itemEntity.setVelocity(0, 0.2, 0); return; }
+                if (!cauldron.canTipArrows()) { itemEntity.setVelocity(0, 0.2, 0); return; }
                 int tipped = cauldron.tipArrows(dropped.getCount());
                 if (tipped > 0) {
                     dropped.decrement(tipped);
                     if (dropped.isEmpty()) itemEntity.discard();
-
                     ItemStack tippedStack = cauldron.createTippedArrowStack(tipped);
-                    ItemEntity result = new ItemEntity(world,
-                            itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(),
-                            tippedStack);
+                    ItemEntity result = new ItemEntity(world, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), tippedStack);
                     world.spawnEntity(result);
-
-                    if (cauldron.consumePendingLevelDecrease()) {
-                        decreaseCauldronLevel(state, world, pos, cauldron);
-                    }
-                    world.playSound(null, pos,
-                            SoundEvents.ENTITY_GENERIC_SPLASH,
-                            SoundCategory.BLOCKS, 0.5f, 1.2f);
+                    if (cauldron.consumePendingLevelDecrease()) decreaseCauldronLevel(state, world, pos, cauldron);
+                    world.playSound(null, pos, SoundEvents.ENTITY_GENERIC_SPLASH, SoundCategory.BLOCKS, 0.5f, 1.2f);
                 }
                 return;
             }
 
+            // ── Красители: выпавшие предметы ────────────────────────────────
+            if (dropped.getItem() instanceof DyeItem) {
+                if (!cauldron.hasLoadedDye() && cauldron.loadDye(dropped)) {
+                    dropped.decrement(1);
+                    if (dropped.isEmpty()) itemEntity.discard();
+
+                    world.playSound(null, pos, SoundEvents.ITEM_DYE_USE, SoundCategory.BLOCKS, 0.8f, 1.0f);
+                }
+                return;
+            }
+            if (isDyeableItem(dropped.getItem()) && cauldron.hasLoadedDye()) {
+                DyeColor color = cauldron.getLoadedDyeColor();
+                String droppedId = Registries.ITEM.getId(dropped.getItem()).getPath();
+                int maxCount = (droppedId.endsWith("_banner") || droppedId.endsWith("_carpet")) ? 64 : 16;
+                int toDye = Math.min(dropped.getCount(), maxCount);
+                Item dyedItem = getDyedItem(dropped.getItem(), color);
+                ItemStack result = new ItemStack(dyedItem, toDye);
+                dropped.decrement(toDye);
+                if (dropped.isEmpty()) itemEntity.discard();
+                else itemEntity.setStack(dropped);
+                ItemEntity output = new ItemEntity(world, itemEntity.getX(), itemEntity.getY(), itemEntity.getZ(), result);
+                output.setVelocity(itemEntity.getVelocity());
+
+                world.spawnEntity(output);
+                cauldron.clearLoadedDye();
+                if (!world.isClient) decreaseCauldronLevel(state, world, pos, cauldron);
+                world.playSound(null, pos, SoundEvents.ITEM_DYE_USE, SoundCategory.BLOCKS, 0.8f, 1.0f);
+                return;
+            }
             return;
         }
 
@@ -423,21 +445,109 @@ public class AspectCauldronBlock extends LeveledCauldronBlock implements BlockEn
             }
             return ActionResult.success(world.isClient);
         }
+        // ── Красители: загрузка в котёл ─────────────────────────────────────
+        if (item instanceof DyeItem) {
+            if (cauldron.hasLoadedDye()) {
+                sendMsg(world, player, "block.aspectalchemy.cauldron.dye_loaded");
+                return ActionResult.CONSUME;
+            }
+            if (!world.isClient) {
+                cauldron.loadDye(stack);
+                if (!player.getAbilities().creativeMode) stack.decrement(1);
+
+                world.playSound(null, pos, SoundEvents.ITEM_DYE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
+            }
+            return ActionResult.success(world.isClient);
+        }
+
+        // ── Красители: окрашивание предметов ────────────────────────────────
+        if (isDyeableItem(item) && cauldron.hasLoadedDye()) {
+            if (!world.isClient) {
+                DyeColor color = cauldron.getLoadedDyeColor();
+                String itemId = Registries.ITEM.getId(item).getPath();
+                int maxCount = (itemId.endsWith("_banner") || itemId.endsWith("_carpet")) ? 64 : 16;
+                int toDye = Math.min(stack.getCount(), maxCount);
+
+                Item dyedItem = getDyedItem(item, color);
+                ItemStack result = new ItemStack(dyedItem, toDye);
+
+                if (!player.getAbilities().creativeMode) stack.decrement(toDye);
+                if (stack.isEmpty()) player.setStackInHand(hand, result);
+                else if (!player.getInventory().insertStack(result)) player.dropItem(result, false);
+
+                cauldron.clearLoadedDye();
+                if (!world.isClient) decreaseCauldronLevel(state, world, pos, cauldron);
+                world.playSound(null, pos, SoundEvents.ITEM_DYE_USE, SoundCategory.BLOCKS, 1.0f, 1.0f);
+            }
+            return ActionResult.success(world.isClient);
+        }
         return ActionResult.PASS;
     }
 
     private boolean isPotionMatching(ItemStack stack, AspectCauldronBlockEntity cauldron) {
-        List<net.minecraft.entity.effect.StatusEffectInstance> potionEffects =
-                net.minecraft.potion.PotionUtil.getCustomPotionEffects(stack);
-        List<net.minecraft.entity.effect.StatusEffectInstance> cauldronEffects = cauldron.getActiveEffects();
+        List<StatusEffectInstance> potionEffects = PotionUtil.getCustomPotionEffects(stack);
+        List<StatusEffectInstance> cauldronEffects = cauldron.getActiveEffects();
 
         if (potionEffects.size() != cauldronEffects.size()) return false;
 
-        for (int i = 0; i < potionEffects.size(); i++) {
-            var p = potionEffects.get(i);
-            var c = cauldronEffects.get(i);
-            if (p.getEffectType() != c.getEffectType() || p.getAmplifier() != c.getAmplifier()) return false;
+        // Создаём копии, чтобы не ломать оригинальные списки
+        ArrayList<StatusEffectInstance> list1 = new ArrayList<>(potionEffects);
+        ArrayList<StatusEffectInstance> list2 = new ArrayList<>(cauldronEffects);
+
+        // Сортируем по: 1) регистр-айди эффекта (строка), 2) амплифайер
+        list1.sort((a, b) -> {
+            String idA = Registries.STATUS_EFFECT.getId(a.getEffectType()).toString();
+            String idB = Registries.STATUS_EFFECT.getId(b.getEffectType()).toString();
+            int cmp = idA.compareTo(idB);
+            return cmp != 0 ? cmp : Integer.compare(a.getAmplifier(), b.getAmplifier());
+        });
+
+        list2.sort((a, b) -> {
+            String idA = Registries.STATUS_EFFECT.getId(a.getEffectType()).toString();
+            String idB = Registries.STATUS_EFFECT.getId(b.getEffectType()).toString();
+            int cmp = idA.compareTo(idB);
+            return cmp != 0 ? cmp : Integer.compare(a.getAmplifier(), b.getAmplifier());
+        });
+
+        // Сравниваем поэлементно
+        for (int i = 0; i < list1.size(); i++) {
+            StatusEffectInstance p = list1.get(i);
+            StatusEffectInstance c = list2.get(i);
+            if (p.getEffectType() != c.getEffectType() || p.getAmplifier() != c.getAmplifier()) {
+                return false;
+            }
         }
         return true;
+    }
+
+    private boolean isDyeableItem(Item item) {
+        String id = Registries.ITEM.getId(item).getPath();
+        return id.endsWith("_wool")
+                || id.endsWith("_terracotta")
+                || id.endsWith("_shulker_box")
+                || id.endsWith("_banner")
+                || id.endsWith("_candle")
+                || id.endsWith("_carpet");
+    }
+
+    private Item getDyedItem(Item baseItem, DyeColor color) {
+        String id = Registries.ITEM.getId(baseItem).getPath();
+        String newId;
+
+        if (id.endsWith("_wool")) newId = color.asString() + "_wool";
+        else if (id.endsWith("_terracotta")) newId = color.asString() + "_terracotta";
+        else if (id.endsWith("_shulker_box")) newId = color.asString() + "_shulker_box";
+        else if (id.endsWith("_banner")) newId = color.asString() + "_banner";
+        else if (id.endsWith("_carpet")) newId = color.asString() + "_carpet";
+        else if (id.endsWith("_candle")) newId = color.asString() + "_candle";
+        else return baseItem;
+
+        return getByName(newId);
+    }
+
+    private Item getByName(String name) {
+        Identifier id = new Identifier("minecraft", name);
+        Item item = Registries.ITEM.get(id);
+        return item != null ? item : Items.AIR; // защита от null
     }
 }
