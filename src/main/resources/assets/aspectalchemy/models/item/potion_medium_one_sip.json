@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "aspectalchemy:item/potion_medium/one_sip/potion_overlay",
+    "layer1": "aspectalchemy:item/potion_medium/one_sip/glass_bottle_medium_glass",
+    "layer2": "aspectalchemy:item/potion_medium/one_sip/glass_bottle_medium_frame"
+  }
+}

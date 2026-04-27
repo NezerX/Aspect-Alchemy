@@ -4,5 +4,10 @@
     "layer0": "aspectalchemy:item/potion_large/potion_overlay",
     "layer1": "aspectalchemy:item/potion_large/glass_bottle_large_glass",
     "layer2": "aspectalchemy:item/potion_large/glass_bottle_large_frame"
-  }
+  },
+  "overrides": [
+    { "predicate": { "custom_model_data": 1 }, "model": "aspectalchemy:item/potion_large_three_sips" },
+    { "predicate": { "custom_model_data": 2 }, "model": "aspectalchemy:item/potion_large_two_sips" },
+    { "predicate": { "custom_model_data": 3 }, "model": "aspectalchemy:item/potion_large_one_sip" }
+  ]
 }

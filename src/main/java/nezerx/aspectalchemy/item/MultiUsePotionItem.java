@@ -39,12 +39,15 @@ public class MultiUsePotionItem extends PotionItem {
         if (nbt != null && nbt.contains("SipsLeft")) {
             return nbt.getInt("SipsLeft");
         }
-        return maxSips; // По умолчанию полное
+        return maxSips;
     }
 
     public void setSipsLeft(ItemStack stack, int sips) {
         stack.getOrCreateNbt().putInt("SipsLeft", sips);
+        // CustomModelData: 0 = полная, растёт по убыванию глотков
+        stack.getOrCreateNbt().putInt("CustomModelData", maxSips - sips);
     }
+
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
@@ -54,7 +57,6 @@ public class MultiUsePotionItem extends PotionItem {
             Criteria.CONSUME_ITEM.trigger(serverPlayer, stack);
         }
 
-        // Применяем эффекты
         if (!world.isClient) {
             List<StatusEffectInstance> effects = PotionUtil.getPotionEffects(stack);
             for (StatusEffectInstance effect : effects) {
@@ -71,7 +73,6 @@ public class MultiUsePotionItem extends PotionItem {
             if (!player.getAbilities().creativeMode) {
                 int sips = getSipsLeft(stack) - 1;
                 if (sips <= 0) {
-                    // Глотки кончились, возвращаем пустую бутылку
                     stack.decrement(1);
                     if (stack.isEmpty()) {
                         return new ItemStack(emptyBottle);
@@ -79,8 +80,7 @@ public class MultiUsePotionItem extends PotionItem {
                         player.getInventory().insertStack(new ItemStack(emptyBottle));
                     }
                 } else {
-                    // Сохраняем оставшиеся глотки
-                    setSipsLeft(stack, sips);
+                    setSipsLeft(stack, sips); // ← CustomModelData обновляется здесь автоматически
                 }
             }
         }

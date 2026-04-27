@@ -4,5 +4,8 @@
     "layer0": "aspectalchemy:item/potion_small/potion_overlay",
     "layer1": "aspectalchemy:item/potion_small/glass_bottle_small_glass",
     "layer2": "aspectalchemy:item/potion_small/glass_bottle_small_frame"
-  }
+  },
+  "overrides": [
+    { "predicate": { "custom_model_data": 1 }, "model": "aspectalchemy:item/potion_small_one_sip" }
+  ]
 }
