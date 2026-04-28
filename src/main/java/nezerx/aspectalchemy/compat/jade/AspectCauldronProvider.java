@@ -18,10 +18,12 @@ public enum AspectCauldronProvider implements IBlockComponentProvider, IServerDa
 
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig config) {
-        if (accessor.getServerData().contains("CauldronContents")) {
-            NbtList items = accessor.getServerData().getList("CauldronContents", 10);
-            IElementHelper helper = tooltip.getElementHelper();
+        NbtCompound data = accessor.getServerData();
 
+        // Ингредиенты
+        if (data.contains("CauldronContents")) {
+            NbtList items = data.getList("CauldronContents", 10);
+            IElementHelper helper = tooltip.getElementHelper();
             for (int i = 0; i < items.size(); i++) {
                 ItemStack stack = ItemStack.fromNbt(items.getCompound(i));
                 if (!stack.isEmpty()) {
@@ -31,19 +33,41 @@ public enum AspectCauldronProvider implements IBlockComponentProvider, IServerDa
             }
         }
 
-        if (accessor.getServerData().contains("JadeDye")) {
-            ItemStack dye = ItemStack.fromNbt(accessor.getServerData().getCompound("JadeDye"));
+        // Краситель
+        if (data.contains("JadeDye")) {
+            ItemStack dye = ItemStack.fromNbt(data.getCompound("JadeDye"));
             tooltip.add(Text.literal("Краситель: ").append(dye.getName()));
+        }
+
+        // Эффекты
+        if (data.contains("CauldronEffects")) {
+            NbtList effects = data.getList("CauldronEffects", 10);
+            if (!effects.isEmpty()) {
+                tooltip.add(Text.literal("§6Эффекты:"));
+                for (int i = 0; i < effects.size(); i++) {
+                    NbtCompound eff = effects.getCompound(i);
+                    String name = eff.getString("Name");
+                    int amplifier = eff.getInt("Amplifier");
+
+                    String roman = switch (amplifier) {
+                        case 1 -> " II"; case 2 -> " III";
+                        case 3 -> " IV"; case 4 -> " V";
+                        default -> "";
+                    };
+
+                    tooltip.add(Text.literal("§7• §r")
+                            .append(Text.translatable(name))
+                            .append(Text.literal(roman)));
+                }
+            }
         }
     }
 
     @Override
     public void appendServerData(NbtCompound data, BlockAccessor accessor) {
-        // 🔥 Важный каст!
-        if (!(accessor.getBlockEntity() instanceof AspectCauldronBlockEntity be)) {
-            return;
-        }
+        if (!(accessor.getBlockEntity() instanceof AspectCauldronBlockEntity be)) return;
 
+        // Ингредиенты (как было)
         NbtList list = new NbtList();
         for (ItemStack stack : be.getInventory()) {
             if (!stack.isEmpty()) {
@@ -54,16 +78,29 @@ public enum AspectCauldronProvider implements IBlockComponentProvider, IServerDa
         }
         data.put("CauldronContents", list);
 
+        // Краситель (как было)
         if (be.hasLoadedDye()) {
             NbtCompound nbt = be.createNbt();
             if (nbt.contains("LoadedDye")) {
                 data.put("JadeDye", nbt.getCompound("LoadedDye"));
             }
         }
+
+        // Эффекты — новое
+        NbtList effectList = new NbtList();
+        for (var effect : be.getActiveEffects()) {
+            NbtCompound eff = new NbtCompound();
+            eff.putString("Name", effect.getEffectType().getTranslationKey());
+            eff.putInt("Amplifier", effect.getAmplifier());
+            effectList.add(eff);
+        }
+        data.put("CauldronEffects", effectList);
     }
 
     @Override
     public Identifier getUid() {
         return Identifier.of("aspectalchemy", "cauldron");
     }
+
+
 }

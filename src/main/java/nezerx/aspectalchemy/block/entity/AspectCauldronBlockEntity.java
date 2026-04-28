@@ -312,9 +312,10 @@ public class AspectCauldronBlockEntity extends BlockEntity {
         for (Map.Entry<StatusEffect, Integer> entry : counts.entrySet()) {
             int count = entry.getValue();
             if (count >= 2) {
-                int amplifier = Math.min(count - 2, 4); // I=1, II=2, III=3... кап V
+                int amplifier = Math.min(count - 2, 4);
+                int duration = entry.getKey().isInstant() ? 1 : 3600;
                 result.add(new StatusEffectInstance(
-                        entry.getKey(), 3600, amplifier,
+                        entry.getKey(), duration, amplifier,
                         false, false, true
                 ));
             }
