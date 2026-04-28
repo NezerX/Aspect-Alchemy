@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "aspect-alchemy",
-	"version": "1.0.7",
+	"version": "1.0.8-alpha",
 	"name": "Aspect Alchemy",
 	"description": "Brew unique potions by combining alchemical aspects of Minecraft items!",
 	"authors": [
@@ -20,12 +20,19 @@
 		],
 		"client": [
 			"nezerx.aspectalchemy.client.AspectAlchemyClient"
+		],
+		"jade": [
+			"nezerx.aspectalchemy.compat.jade.AspectAlchemyJadePlugin"
 		]
 	},
 	"depends": {
 		"fabricloader": ">=0.15.11",
 		"minecraft": "~1.20.1",
 		"java": ">=17",
-		"fabric-api": "*"
+		"fabric-api": "*",
+		"jade": ">=11.13.1"
+	},
+	"suggests": {
+		"jade": ">=11.13.1"
 	}
 }
