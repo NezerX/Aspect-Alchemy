@@ -1,0 +1,11 @@
+{
+  "name": "Introduction",
+  "category": "aspectalchemy:basics",
+  "icon": "minecraft:cauldron",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "If you see this, the GUI is finally working."
+    }
+  ]
+}

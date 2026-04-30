@@ -8,6 +8,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import nezerx.aspectalchemy.AspectAlchemyMod;
+import nezerx.aspectalchemy.item.AlchemistsGuideItem;
 import nezerx.aspectalchemy.item.MultiUsePotionItem;
 
 public class ModItems {
@@ -21,6 +22,8 @@ public class ModItems {
     public static final Item POTION_SMALL = registerItem("potion_small", new MultiUsePotionItem(new FabricItemSettings().maxCount(1), 2, GLASS_BOTTLE_SMALL));
     public static final Item POTION_MEDIUM = registerItem("potion_medium", new MultiUsePotionItem(new FabricItemSettings().maxCount(1), 3, GLASS_BOTTLE_MEDIUM));
     public static final Item POTION_LARGE = registerItem("potion_large", new MultiUsePotionItem(new FabricItemSettings().maxCount(1), 4, GLASS_BOTTLE_LARGE));
+
+    public static final Item ALCHEMISTS_GUIDE = registerItem("alchemists_guide", new AlchemistsGuideItem(new FabricItemSettings().maxCount(1)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(AspectAlchemyMod.MOD_ID, name), item);

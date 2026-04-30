@@ -1,0 +1,33 @@
+{
+  "parent": "aspectalchemy:discovery/root",
+  "display": {
+    "icon": {
+      "item": "minecraft:wither_rose"
+    },
+    "title": {
+      "translate": "advancements.aspectalchemy.discovery.wither_rose.title"
+    },
+    "description": {
+      "translate": "advancements.aspectalchemy.discovery.wither_rose.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "get_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:wither_rose"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["get_item"]
+  ]
+}
