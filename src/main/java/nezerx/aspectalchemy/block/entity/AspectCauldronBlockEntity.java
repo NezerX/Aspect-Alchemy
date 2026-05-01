@@ -9,7 +9,7 @@ import net.minecraft.util.DyeColor;
 import net.minecraft.util.math.Box;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import nezerx.aspectalchemy.AspectAlchemyMod; // Убедись, что путь верный
+import nezerx.aspectalchemy.AspectAlchemyMod;
 import net.minecraft.item.DyeItem;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;

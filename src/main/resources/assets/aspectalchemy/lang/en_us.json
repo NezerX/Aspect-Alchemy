@@ -46,5 +46,6 @@
   "block.aspectalchemy.cauldron.not_boiling": "The cauldron is not boiling",
   "block.aspectalchemy.cauldron.full": "The cauldron is full",
   "item.aspectalchemy.arrow.prefix.beneficial": "Arrow of",
-  "item.aspectalchemy.arrow.prefix.harmful": "Poisoned Arrow of"
+  "item.aspectalchemy.arrow.prefix.harmful": "Poisoned Arrow of",
+  "item.aspectalchemy.alchemists_guide": "Alchemists Guide"
 }
