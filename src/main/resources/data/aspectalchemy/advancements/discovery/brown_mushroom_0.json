@@ -1,33 +1,17 @@
 {
   "parent": "aspectalchemy:discovery/root",
-  "display": {
-    "icon": {
-      "item": "minecraft:brown_mushroom"
-    },
-    "title": {
-      "translate": "advancements.aspectalchemy.discovery.brown_mushroom.title"
-    },
-    "description": {
-      "translate": "advancements.aspectalchemy.discovery.brown_mushroom.description"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
-    "get_item": {
+    "requirement": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:brown_mushroom"]
+            "items": [
+              "minecraft:brown_mushroom"
+            ]
           }
         ]
       }
     }
-  },
-  "requirements": [
-    ["get_item"]
-  ]
+  }
 }

@@ -1,5 +1,9 @@
 package nezerx.aspectalchemy.block.entity;
 
+import net.minecraft.advancement.Advancement;
+import net.minecraft.advancement.AdvancementProgress;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
 import nezerx.aspectalchemy.block.AspectCauldronBlock;
 import net.minecraft.world.World;
 import net.minecraft.entity.ItemEntity;
@@ -387,7 +391,16 @@ public class AspectCauldronBlockEntity extends BlockEntity {
             else break;
         }
 
+
         bottle.setCustomName(buildPotionName(primary));
+
+        if (world != null && !world.isClient) {
+            ServerPlayerEntity player = (ServerPlayerEntity) world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 3.0, false);
+            if (player != null) {
+                checkAndUnlockAspects(player, cachedEffects);
+            }
+        }
+
         return bottle;
     }
 
@@ -565,5 +578,49 @@ public class AspectCauldronBlockEntity extends BlockEntity {
         }
 
         return name.styled(style -> style.withItalic(false).withColor(color));
+    }
+
+    private void checkAndUnlockAspects(ServerPlayerEntity player, List<StatusEffectInstance> resultEffects) {
+        System.out.println("[AspectAlchemy] Checking aspects for " + player.getName().getString());
+
+        for (ItemStack ingredient : inventory) {
+            if (ingredient.isEmpty()) continue;
+            Item item = ingredient.getItem();
+            List<StatusEffect> allAspects = AspectAlchemyData.ASPECT_MAP.get(item);
+            if (allAspects == null) continue;
+
+            String itemId = Registries.ITEM.getId(item).getPath();
+            System.out.println("[AspectAlchemy] Processing ingredient: " + itemId);
+
+            for (int i = 0; i < allAspects.size(); i++) {
+                StatusEffect aspect = allAspects.get(i);
+                Identifier advId = new Identifier("aspectalchemy", "discovery/" + itemId + "_" + i);
+
+                boolean effectPresent = resultEffects.stream().anyMatch(e -> e.getEffectType() == aspect);
+
+                if (effectPresent) {
+                    System.out.println("[AspectAlchemy] Effect " + aspect + " present, granting " + advId);
+                    grantAdvancement(player, advId);
+
+                    if (i + 1 < allAspects.size()) {
+                        Identifier nextAdvId = new Identifier("aspectalchemy", "discovery/" + itemId + "_" + (i + 1));
+                        System.out.println("[AspectAlchemy] Also granting next: " + nextAdvId);
+                        grantAdvancement(player, nextAdvId);
+                    }
+                }
+            }
+        }
+    }
+
+    private void grantAdvancement(ServerPlayerEntity player, Identifier id) {
+        Advancement advancement = player.getServer().getAdvancementLoader().get(id);
+        if (advancement != null) {
+            AdvancementProgress progress = player.getAdvancementTracker().getProgress(advancement);
+            if (!progress.isDone()) {
+                for (String criterion : progress.getUnobtainedCriteria()) {
+                    player.getAdvancementTracker().grantCriterion(advancement, criterion);
+                }
+            }
+        }
     }
 }

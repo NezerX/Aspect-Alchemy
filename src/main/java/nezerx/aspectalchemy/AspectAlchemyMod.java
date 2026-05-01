@@ -14,6 +14,7 @@ import nezerx.aspectalchemy.init.ModItems;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import vazkii.patchouli.api.PatchouliAPI;
 
 public class AspectAlchemyMod implements ModInitializer {
     public static final String MOD_ID = "aspectalchemy";

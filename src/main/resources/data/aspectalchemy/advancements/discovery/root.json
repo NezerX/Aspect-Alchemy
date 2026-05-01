@@ -1,18 +1,13 @@
 {
   "display": {
-    "icon": {
-      "item": "minecraft:cauldron"
-    },
-    "title": { "translate": "advancements.aspectalchemy.root.title" },
-    "description": { "translate": "advancements.aspectalchemy.root.description" },
-    "background": "minecraft:textures/block/stone.png",
+    "icon": { "item": "minecraft:cauldron" },
+    "title": "Alchemy Root",
+    "description": "Debug Root",
     "show_toast": false,
     "announce_to_chat": false,
     "hidden": false
   },
   "criteria": {
-    "tick": {
-      "trigger": "minecraft:tick"
-    }
+    "requirement": { "trigger": "minecraft:impossible" }
   }
 }

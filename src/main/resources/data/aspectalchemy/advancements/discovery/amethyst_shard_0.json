@@ -1,33 +1,17 @@
 {
   "parent": "aspectalchemy:discovery/root",
-  "display": {
-    "icon": {
-      "item": "minecraft:amethyst_shard"
-    },
-    "title": {
-      "translate": "advancements.aspectalchemy.discovery.amethyst_shard.title"
-    },
-    "description": {
-      "translate": "advancements.aspectalchemy.discovery.amethyst_shard.description"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
-    "get_item": {
+    "requirement": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:amethyst_shard"]
+            "items": [
+              "minecraft:amethyst_shard"
+            ]
           }
         ]
       }
     }
-  },
-  "requirements": [
-    ["get_item"]
-  ]
+  }
 }

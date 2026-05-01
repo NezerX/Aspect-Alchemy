@@ -1,33 +1,17 @@
 {
   "parent": "aspectalchemy:discovery/root",
-  "display": {
-    "icon": {
-      "item": "minecraft:ghast_tear"
-    },
-    "title": {
-      "translate": "advancements.aspectalchemy.discovery.ghast_tear.title"
-    },
-    "description": {
-      "translate": "advancements.aspectalchemy.discovery.ghast_tear.description"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
-    "get_item": {
+    "requirement": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:ghast_tear"]
+            "items": [
+              "minecraft:ghast_tear"
+            ]
           }
         ]
       }
     }
-  },
-  "requirements": [
-    ["get_item"]
-  ]
+  }
 }

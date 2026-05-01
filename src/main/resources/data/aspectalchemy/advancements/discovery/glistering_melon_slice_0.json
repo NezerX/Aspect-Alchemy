@@ -1,33 +1,17 @@
 {
   "parent": "aspectalchemy:discovery/root",
-  "display": {
-    "icon": {
-      "item": "minecraft:glistering_melon_slice"
-    },
-    "title": {
-      "translate": "advancements.aspectalchemy.discovery.glistering_melon_slice.title"
-    },
-    "description": {
-      "translate": "advancements.aspectalchemy.discovery.glistering_melon_slice.description"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
-    "get_item": {
+    "requirement": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:glistering_melon_slice"]
+            "items": [
+              "minecraft:glistering_melon_slice"
+            ]
           }
         ]
       }
     }
-  },
-  "requirements": [
-    ["get_item"]
-  ]
+  }
 }

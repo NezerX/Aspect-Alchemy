@@ -36,7 +36,7 @@ public class AspectAlchemyClient implements ClientModInitializer {
             return tintIndex > 0 ? -1 : PotionUtil.getColor(stack);
         }, ModItems.POTION_SMALL, ModItems.POTION_MEDIUM, ModItems.POTION_LARGE);
 
-        ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
+        /*        ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
             List<StatusEffect> effects = AspectAlchemyData.ASPECT_MAP.get(stack.getItem());
             if (effects == null || effects.isEmpty()) return;
 
@@ -52,7 +52,7 @@ public class AspectAlchemyClient implements ClientModInitializer {
                         .append(Text.translatable(effect.getTranslationKey()).formatted(color))
                 );
             }
-        });
+        });*/
     }
 
 

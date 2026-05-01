@@ -1,33 +1,17 @@
 {
   "parent": "aspectalchemy:discovery/root",
-  "display": {
-    "icon": {
-      "item": "minecraft:fermented_spider_eye"
-    },
-    "title": {
-      "translate": "advancements.aspectalchemy.discovery.fermented_spider_eye.title"
-    },
-    "description": {
-      "translate": "advancements.aspectalchemy.discovery.fermented_spider_eye.description"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
-    "get_item": {
+    "requirement": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:fermented_spider_eye"]
+            "items": [
+              "minecraft:fermented_spider_eye"
+            ]
           }
         ]
       }
     }
-  },
-  "requirements": [
-    ["get_item"]
-  ]
+  }
 }

@@ -1,33 +1,17 @@
 {
   "parent": "aspectalchemy:discovery/root",
-  "display": {
-    "icon": {
-      "item": "minecraft:phantom_membrane"
-    },
-    "title": {
-      "translate": "advancements.aspectalchemy.discovery.phantom_membrane.title"
-    },
-    "description": {
-      "translate": "advancements.aspectalchemy.discovery.phantom_membrane.description"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
-    "get_item": {
+    "requirement": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:phantom_membrane"]
+            "items": [
+              "minecraft:phantom_membrane"
+            ]
           }
         ]
       }
     }
-  },
-  "requirements": [
-    ["get_item"]
-  ]
+  }
 }
