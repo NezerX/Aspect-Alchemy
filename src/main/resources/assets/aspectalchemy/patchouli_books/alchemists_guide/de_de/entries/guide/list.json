@@ -1,7 +1,7 @@
 {
-  "name": "Алхимические ингредиенты",
-  "category": "aspectalchemy:basics",
-  "icon": "minecraft:cauldron",
+  "name": "Ingredient List",
+  "category": "aspectalchemy:guide",
+  "icon": "minecraft:nether_wart",
   "pages": [
     {
       "type": "aspectalchemy:ingredient_grid",
@@ -20,15 +20,6 @@
       "item8": "minecraft:soul_sand", "item9": "minecraft:clay_ball", "item10": "minecraft:pitcher_plant", "item11": "minecraft:obsidian",
       "item12": "minecraft:diamond", "item13": "minecraft:echo_shard", "item14": "minecraft:nether_brick", "item15": "minecraft:milk_bucket",
       "item16": "minecraft:honey_bottle", "item17": "minecraft:chorus_fruit", "item18": "minecraft:ender_pearl", "item19": "minecraft:rotten_flesh"
-    },
-    {
-      "type": "aspectalchemy:ingredient_grid",
-      "items": "minecraft:bone,minecraft:string,minecraft:feather,minecraft:honeycomb",
-      "item0": "minecraft:bone", "item1": "minecraft:string", "item2": "minecraft:feather", "item3": "minecraft:honeycomb",
-      "item4": "minecraft:air", "item5": "minecraft:air", "item6": "minecraft:air", "item7": "minecraft:air",
-      "item8": "minecraft:air", "item9": "minecraft:air", "item10": "minecraft:air", "item11": "minecraft:air",
-      "item12": "minecraft:air", "item13": "minecraft:air", "item14": "minecraft:air", "item15": "minecraft:air",
-      "item16": "minecraft:air", "item17": "minecraft:air", "item18": "minecraft:air", "item19": "minecraft:air"
     }
   ]
 }

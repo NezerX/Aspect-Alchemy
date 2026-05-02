@@ -27,6 +27,7 @@
   "effect.aspectalchemy.declined.nausea": "Náusea",
   "effect.aspectalchemy.declined.poison": "Veneno",
   "effect.aspectalchemy.declined.weakness": "Debilidad",
+  "effect.aspectalchemy.declined.instant_health": "Healing",
   "effect.aspectalchemy.declined.regeneration": "Regeneración",
   "effect.aspectalchemy.declined.health_boost": "Aumento de Vida",
   "effect.aspectalchemy.declined.bad_omen": "Mal Presagio",
