@@ -17,6 +17,8 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.minecraft.client.render.RenderLayer;
 
+import static nezerx.aspectalchemy.block.entity.AspectCauldronBlockEntity.toRoman;
+
 public class AspectAlchemyClient implements ClientModInitializer {
 
     @Override
@@ -40,23 +42,22 @@ public class AspectAlchemyClient implements ClientModInitializer {
         // Регистрация тултипа с проверкой на креатив
         ItemTooltipCallback.EVENT.register((stack, context, lines) -> {
             var player = MinecraftClient.getInstance().player;
-
-            // Если игрока нет или он не в креативе — ничего не показываем
             if (player == null || !player.isCreative()) return;
 
-            List<StatusEffect> effects = AspectAlchemyData.ASPECT_MAP.get(stack.getItem());
-            if (effects == null || effects.isEmpty()) return;
+            List<AspectAlchemyData.AspectEntry> entries = AspectAlchemyData.ASPECT_MAP.get(stack.getItem());
+            if (entries == null || entries.isEmpty()) return;
 
             lines.add(Text.empty());
-
             lines.add(Text.translatable("item.aspectalchemy.tooltip.aspects")
                     .formatted(Formatting.DARK_AQUA));
 
-            for (StatusEffect effect : effects) {
-                Formatting color = effect.isBeneficial() ? Formatting.AQUA : Formatting.RED;
+            for (AspectAlchemyData.AspectEntry entry : entries) {
+                Formatting color = entry.effect().isBeneficial() ? Formatting.AQUA : Formatting.RED;
+                String power = entry.power() > 1 ? " (" + toRoman(entry.power()) + ")" : "";
                 lines.add(Text.literal("  • ")
                         .formatted(Formatting.GRAY)
-                        .append(Text.translatable(effect.getTranslationKey()).formatted(color))
+                        .append(Text.translatable(entry.effect().getTranslationKey()).formatted(color))
+                        .append(Text.literal(power).formatted(Formatting.GRAY))
                 );
             }
         });

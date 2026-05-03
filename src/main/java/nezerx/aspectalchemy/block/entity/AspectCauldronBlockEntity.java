@@ -2,6 +2,7 @@ package nezerx.aspectalchemy.block.entity;
 
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementProgress;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import nezerx.aspectalchemy.block.AspectCauldronBlock;
@@ -300,23 +301,23 @@ public class AspectCauldronBlockEntity extends BlockEntity {
     private void ensureEffectsCached() {
         if (cachedEffects != null) return;
 
-        List<StatusEffect> allEffects = new ArrayList<>();
+        // Суммируем силу каждого эффекта по всем ингредиентам
+        Map<StatusEffect, Integer> powerSums = new LinkedHashMap<>();
         for (ItemStack stack : inventory) {
-            if (!stack.isEmpty() && AspectAlchemyData.ASPECT_MAP.containsKey(stack.getItem())) {
-                allEffects.addAll(AspectAlchemyData.ASPECT_MAP.get(stack.getItem()));
+            if (stack.isEmpty()) continue;
+            List<AspectAlchemyData.AspectEntry> entries = AspectAlchemyData.ASPECT_MAP.get(stack.getItem());
+            if (entries == null) continue;
+            for (AspectAlchemyData.AspectEntry entry : entries) {
+                powerSums.merge(entry.effect(), entry.power(), Integer::sum);
             }
         }
 
-        Map<StatusEffect, Integer> counts = new LinkedHashMap<>();
-        for (StatusEffect effect : allEffects) {
-            counts.merge(effect, 1, Integer::sum);
-        }
-
+        // Порог появления эффекта — суммарная сила >= 2
         List<StatusEffectInstance> result = new ArrayList<>();
-        for (Map.Entry<StatusEffect, Integer> entry : counts.entrySet()) {
-            int count = entry.getValue();
-            if (count >= 2) {
-                int amplifier = Math.min(count - 2, 4);
+        for (Map.Entry<StatusEffect, Integer> entry : powerSums.entrySet()) {
+            int totalPower = entry.getValue();
+            if (totalPower >= 2) {
+                int amplifier = Math.min(totalPower - 2, 4);
                 int duration = entry.getKey().isInstant() ? 1 : 3600;
                 result.add(new StatusEffectInstance(
                         entry.getKey(), duration, amplifier,
@@ -373,16 +374,15 @@ public class AspectCauldronBlockEntity extends BlockEntity {
         PotionUtil.setCustomPotionEffects(bottle, cachedEffects);
         bottle.getOrCreateNbt().putInt("CustomPotionColor", getWaterColor());
 
-        // ↓ БЫЛО: bottle.getOrCreateNbt().putInt("SipsLeft", 1);
         if (targetPotionItem instanceof nezerx.aspectalchemy.item.MultiUsePotionItem multiPotion) {
             multiPotion.setSipsLeft(bottle, 1); // теперь CustomModelData тоже выставляется
         }
 
         List<StatusEffectInstance> sorted = new ArrayList<>(cachedEffects);
-        sorted.sort(Comparator
-                .comparingInt(StatusEffectInstance::getAmplifier).reversed()
-                .thenComparing(eff -> eff.getEffectType().isBeneficial(), Comparator.reverseOrder())
-                .thenComparingInt(StatusEffectInstance::getDuration).reversed());
+        sorted.sort(
+                Comparator.comparingInt((StatusEffectInstance e) -> e.getAmplifier()).reversed()
+                        .thenComparingInt(e -> -AspectAlchemyData.NAMING_WEIGHT.getOrDefault(e.getEffectType(), 0))
+        );
 
         List<StatusEffectInstance> primary = new ArrayList<>();
         int maxAmplifier = sorted.get(0).getAmplifier();
@@ -391,7 +391,32 @@ public class AspectCauldronBlockEntity extends BlockEntity {
             else break;
         }
 
+        boolean healingDominant = primary.stream().anyMatch(e ->
+                e.getEffectType() == StatusEffects.INSTANT_HEALTH ||
+                        e.getEffectType() == StatusEffects.REGENERATION
+        );
 
+        if (healingDominant) {
+            List<StatusEffectInstance> adjusted = new ArrayList<>();
+            for (StatusEffectInstance eff : cachedEffects) {
+                StatusEffect type = eff.getEffectType();
+                boolean isSideEffect =
+                        type == StatusEffects.SLOWNESS ||
+                                type == StatusEffects.WEAKNESS;
+
+                if (isSideEffect) {
+                    // 30 секунд вместо стандартных 3 минут
+                    adjusted.add(new StatusEffectInstance(
+                            type, 600, eff.getAmplifier(),
+                            false, false, true
+                    ));
+                } else {
+                    adjusted.add(eff);
+                }
+            }
+            cachedEffects = adjusted; // [ИЗМЕНЕНИЕ] обновляем кэш перед записью в бутылку
+            PotionUtil.setCustomPotionEffects(bottle, cachedEffects); // [ИЗМЕНЕНИЕ] перезаписываем NBT
+        }
         bottle.setCustomName(buildPotionName(primary));
 
         if (world != null && !world.isClient) {
@@ -444,7 +469,7 @@ public class AspectCauldronBlockEntity extends BlockEntity {
 
 
     /** Конвертирует число в римскую цифру (достаточно до V для зелий) */
-    private static String toRoman(int n) {
+    public static String toRoman(int n) {
         return switch (n) {
             case 2  -> "II";
             case 3  -> "III";
@@ -534,10 +559,10 @@ public class AspectCauldronBlockEntity extends BlockEntity {
         ensureEffectsCached();
 
         List<StatusEffectInstance> sorted = new ArrayList<>(cachedEffects);
-        sorted.sort(Comparator
-                .comparingInt(StatusEffectInstance::getAmplifier).reversed()
-                .thenComparing(eff -> eff.getEffectType().isBeneficial(), Comparator.reverseOrder())
-                .thenComparingInt(StatusEffectInstance::getDuration).reversed());
+        sorted.sort(
+                Comparator.comparingInt((StatusEffectInstance e) -> e.getAmplifier()).reversed()
+                        .thenComparingInt(e -> -AspectAlchemyData.NAMING_WEIGHT.getOrDefault(e.getEffectType(), 0))
+        );
 
         List<StatusEffectInstance> primary = new ArrayList<>();
         int maxAmplifier = sorted.get(0).getAmplifier();
@@ -581,31 +606,24 @@ public class AspectCauldronBlockEntity extends BlockEntity {
     }
 
     private void checkAndUnlockAspects(ServerPlayerEntity player, List<StatusEffectInstance> resultEffects) {
-        System.out.println("[AspectAlchemy] Checking aspects for " + player.getName().getString());
-
         for (ItemStack ingredient : inventory) {
             if (ingredient.isEmpty()) continue;
             Item item = ingredient.getItem();
-            List<StatusEffect> allAspects = AspectAlchemyData.ASPECT_MAP.get(item);
-            if (allAspects == null) continue;
+            List<AspectAlchemyData.AspectEntry> entries = AspectAlchemyData.ASPECT_MAP.get(item);
+            if (entries == null) continue;
 
             String itemId = Registries.ITEM.getId(item).getPath();
-            System.out.println("[AspectAlchemy] Processing ingredient: " + itemId);
 
-            for (int i = 0; i < allAspects.size(); i++) {
-                StatusEffect aspect = allAspects.get(i);
+            for (int i = 0; i < entries.size(); i++) {
+                StatusEffect aspect = entries.get(i).effect();
                 Identifier advId = new Identifier("aspectalchemy", "discovery/" + itemId + "_" + i);
 
                 boolean effectPresent = resultEffects.stream().anyMatch(e -> e.getEffectType() == aspect);
 
                 if (effectPresent) {
-                    System.out.println("[AspectAlchemy] Effect " + aspect + " present, granting " + advId);
                     grantAdvancement(player, advId);
-
-                    if (i + 1 < allAspects.size()) {
-                        Identifier nextAdvId = new Identifier("aspectalchemy", "discovery/" + itemId + "_" + (i + 1));
-                        System.out.println("[AspectAlchemy] Also granting next: " + nextAdvId);
-                        grantAdvancement(player, nextAdvId);
+                    if (i + 1 < entries.size()) {
+                        grantAdvancement(player, new Identifier("aspectalchemy", "discovery/" + itemId + "_" + (i + 1)));
                     }
                 }
             }

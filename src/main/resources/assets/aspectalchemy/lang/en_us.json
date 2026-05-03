@@ -5,10 +5,24 @@
   "item.aspectalchemy.potion.prefix.harmful": "Bane of",
   "item.aspectalchemy.potion.conjunction": "and",
   "item.aspectalchemy.tooltip.aspects": "Discovered aspects:",
+
+  "item.aspectalchemy.glass_bottle_small": "Small glass bottle",
+  "item.aspectalchemy.glass_bottle_medium": "Medium glass bottle",
+  "item.aspectalchemy.glass_bottle_large": "Large glass bottle",
+  "item.aspectalchemy.potion_small": "Small potion",
+  "item.aspectalchemy.potion_medium": "Medium potion",
+  "item.aspectalchemy.potion_large": "Large potion",
+  "item.aspectalchemy.tooltip.sips": "Sips: %s / %s",
+
+  "item.aspectalchemy.alchemists_guide": "Alchemists Guide",
+
+  "---": "Ключи для твоих эффектов (declined)",
   "effect.aspectalchemy.declined.wither": "Wither",
   "effect.aspectalchemy.declined.invisibility": "Invisibility",
   "effect.aspectalchemy.declined.speed": "Speed",
+  "effect.aspectalchemy.declined.swiftness": "Speed",
   "effect.aspectalchemy.declined.jump_boost": "Jump Boost",
+  "effect.aspectalchemy.declined.leaping": "Leaping",
   "effect.aspectalchemy.declined.mining_fatigue": "Mining Fatigue",
   "effect.aspectalchemy.declined.luck": "Luck",
   "effect.aspectalchemy.declined.slow_falling": "Slow Falling",
@@ -20,7 +34,8 @@
   "effect.aspectalchemy.declined.glowing": "Glowing",
   "effect.aspectalchemy.declined.haste": "Haste",
   "effect.aspectalchemy.declined.night_vision": "Night Vision",
-  "effect.aspectalchemy.declined.instant_damage": "Instant Damage",
+  "effect.aspectalchemy.declined.instant_damage": "Harming",
+  "effect.aspectalchemy.declined.harming": "Harming",
   "effect.aspectalchemy.declined.hunger": "Hunger",
   "effect.aspectalchemy.declined.water_breathing": "Water Breathing",
   "effect.aspectalchemy.declined.blindness": "Blindness",
@@ -30,23 +45,70 @@
   "effect.aspectalchemy.declined.regeneration": "Regeneration",
   "effect.aspectalchemy.declined.health_boost": "Health Boost",
   "effect.aspectalchemy.declined.instant_health": "Healing",
+  "effect.aspectalchemy.declined.healing": "Healing",
   "effect.aspectalchemy.declined.bad_omen": "Bad Omen",
   "effect.aspectalchemy.declined.resistance": "Resistance",
   "effect.aspectalchemy.declined.slowness": "Slowness",
   "effect.aspectalchemy.declined.unluck": "Bad Luck",
-  "item.aspectalchemy.glass_bottle_small": "Small glass bottle",
-  "item.aspectalchemy.glass_bottle_medium": "Medium glass bottle",
-  "item.aspectalchemy.glass_bottle_large": "Large glass bottle",
-  "item.aspectalchemy.potion_small": "Small potion",
-  "item.aspectalchemy.potion_medium": "Medium potion",
-  "item.aspectalchemy.potion_large": "Large potion",
-  "item.aspectalchemy.tooltip.sips": "Sips: %s / %s",
-  "block.aspectalchemy.cauldron.empty": "The cauldron is empty",
-  "block.aspectalchemy.cauldron.bottle_full": "The bottle is already full",
-  "block.aspectalchemy.cauldron.potion_mismatch": "The potions in the cauldron and bottle don't match",
-  "block.aspectalchemy.cauldron.not_boiling": "The cauldron is not boiling",
-  "block.aspectalchemy.cauldron.full": "The cauldron is full",
-  "item.aspectalchemy.arrow.prefix.beneficial": "Arrow of",
-  "item.aspectalchemy.arrow.prefix.harmful": "Poisoned Arrow of",
-  "item.aspectalchemy.alchemists_guide": "Alchemists Guide"
+
+  "---": "Локализация для динамических зелий в креативе",
+  "item.aspectalchemy.potion_small.effect.empty": "Small Water Bottle",
+  "item.aspectalchemy.potion_medium.effect.empty": "Medium Water Bottle",
+  "item.aspectalchemy.potion_large.effect.empty": "Large Water Bottle",
+
+  "item.aspectalchemy.potion_small.effect.swiftness": "Small Potion of Swiftness",
+  "item.aspectalchemy.potion_medium.effect.swiftness": "Medium Potion of Swiftness",
+  "item.aspectalchemy.potion_large.effect.swiftness": "Large Potion of Swiftness",
+
+  "item.aspectalchemy.potion_small.effect.slowness": "Small Potion of Slowness",
+  "item.aspectalchemy.potion_medium.effect.slowness": "Medium Potion of Slowness",
+  "item.aspectalchemy.potion_large.effect.slowness": "Large Potion of Slowness",
+
+  "item.aspectalchemy.potion_small.effect.strength": "Small Potion of Strength",
+  "item.aspectalchemy.potion_medium.effect.strength": "Medium Potion of Strength",
+  "item.aspectalchemy.potion_large.effect.strength": "Large Potion of Strength",
+
+  "item.aspectalchemy.potion_small.effect.healing": "Small Potion of Healing",
+  "item.aspectalchemy.potion_medium.effect.healing": "Medium Potion of Healing",
+  "item.aspectalchemy.potion_large.effect.healing": "Large Potion of Healing",
+
+  "item.aspectalchemy.potion_small.effect.harming": "Small Potion of Harming",
+  "item.aspectalchemy.potion_medium.effect.harming": "Medium Potion of Harming",
+  "item.aspectalchemy.potion_large.effect.harming": "Large Potion of Harming",
+
+  "item.aspectalchemy.potion_small.effect.leaping": "Small Potion of Leaping",
+  "item.aspectalchemy.potion_medium.effect.leaping": "Medium Potion of Leaping",
+  "item.aspectalchemy.potion_large.effect.leaping": "Large Potion of Leaping",
+
+  "item.aspectalchemy.potion_small.effect.regeneration": "Small Potion of Regeneration",
+  "item.aspectalchemy.potion_medium.effect.regeneration": "Medium Potion of Regeneration",
+  "item.aspectalchemy.potion_large.effect.regeneration": "Large Potion of Regeneration",
+
+  "item.aspectalchemy.potion_small.effect.fire_resistance": "Small Potion of Fire Resistance",
+  "item.aspectalchemy.potion_medium.effect.fire_resistance": "Medium Potion of Fire Resistance",
+  "item.aspectalchemy.potion_large.effect.fire_resistance": "Large Potion of Fire Resistance",
+
+  "item.aspectalchemy.potion_small.effect.water_breathing": "Small Potion of Water Breathing",
+  "item.aspectalchemy.potion_medium.effect.water_breathing": "Medium Potion of Water Breathing",
+  "item.aspectalchemy.potion_large.effect.water_breathing": "Large Potion of Water Breathing",
+
+  "item.aspectalchemy.potion_small.effect.invisibility": "Small Potion of Invisibility",
+  "item.aspectalchemy.potion_medium.effect.invisibility": "Medium Potion of Invisibility",
+  "item.aspectalchemy.potion_large.effect.invisibility": "Large Potion of Invisibility",
+
+  "item.aspectalchemy.potion_small.effect.night_vision": "Small Potion of Night Vision",
+  "item.aspectalchemy.potion_medium.effect.night_vision": "Medium Potion of Night Vision",
+  "item.aspectalchemy.potion_large.effect.night_vision": "Large Potion of Night Vision",
+
+  "item.aspectalchemy.potion_small.effect.poison": "Small Potion of Poison",
+  "item.aspectalchemy.potion_medium.effect.poison": "Medium Potion of Poison",
+  "item.aspectalchemy.potion_large.effect.poison": "Large Potion of Poison",
+
+  "item.aspectalchemy.potion_small.effect.weakness": "Small Potion of Weakness",
+  "item.aspectalchemy.potion_medium.effect.weakness": "Medium Potion of Weakness",
+  "item.aspectalchemy.potion_large.effect.weakness": "Large Potion of Weakness",
+
+  "item.aspectalchemy.potion_small.effect.slow_falling": "Small Potion of Slow Falling",
+  "item.aspectalchemy.potion_medium.effect.slow_falling": "Medium Potion of Slow Falling",
+  "item.aspectalchemy.potion_large.effect.slow_falling": "Large Potion of Slow Falling"
 }

@@ -1,5 +1,4 @@
 {
-  "parent": "aspectalchemy:discovery/root",
   "criteria": {
     "requirement": {
       "trigger": "minecraft:inventory_changed",
@@ -7,7 +6,7 @@
         "items": [
           {
             "items": [
-              "minecraft:gunpowder"
+              "minecraft:honey_bottle"
             ]
           }
         ]
