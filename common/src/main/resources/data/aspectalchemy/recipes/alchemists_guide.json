@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "minecraft:copper_ingot"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    [
+      { "item": "minecraft:black_dye" },
+      { "item": "minecraft:glow_ink_sac" },
+      { "item": "minecraft:ink_sac" },
+      { "item": "minecraft:coal" },
+      { "item": "minecraft:charcoal" }
+    ]
+  ],
+  "result": {
+    "item": "aspectalchemy:alchemists_guide",
+    "count": 1
+  }
+}

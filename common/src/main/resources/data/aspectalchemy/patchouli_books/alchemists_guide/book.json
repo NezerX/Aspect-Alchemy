@@ -1,0 +1,9 @@
+{
+  "name": "Alchemist's Field Guide",
+  "landing_text": "",
+  "version": 1,
+  "pamphlet": true,
+  "show_progress": false,
+  "use_resource_pack": true,
+  "index_contents": true
+}
