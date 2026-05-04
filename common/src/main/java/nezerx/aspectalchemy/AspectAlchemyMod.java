@@ -1,6 +1,5 @@
 package nezerx.aspectalchemy;
 
-import net.fabricmc.api.ModInitializer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.DyeColor;
@@ -15,13 +14,14 @@ import org.slf4j.LoggerFactory;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AspectAlchemyMod implements ModInitializer {
+// УБРАЛИ implements ModInitializer
+public class AspectAlchemyMod {
     public static final String MOD_ID = "aspectalchemy";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static final Set<Item> DYEABLE_ITEMS = new HashSet<>();
 
-    @Override
-    public void onInitialize() {
+    // Переименовали в init и сделали static
+    public static void init() {
         LOGGER.info("Initializing Aspect Alchemy!");
         ModBlocks.register();
         ModBlockEntities.register();
@@ -44,13 +44,9 @@ public class AspectAlchemyMod implements ModInitializer {
 
     private static void safeAdd(String namespace, String path) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(namespace, path);
-        Item item = BuiltInRegistries.ITEM.getOptional(id).orElse(null);
-        if (item != null && item != Items.AIR) {
+        Item item = BuiltInRegistries.ITEM.get(id); // В 1.21.1 BuiltInRegistries.ITEM.get возвращает Item напрямую
+        if (item != Items.AIR) {
             DYEABLE_ITEMS.add(item);
         }
-    }
-
-    public static void init() {
-        new AspectAlchemyMod().onInitialize();
     }
 }

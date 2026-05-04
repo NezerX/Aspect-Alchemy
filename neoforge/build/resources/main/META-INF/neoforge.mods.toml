@@ -1,17 +1,18 @@
 modLoader = "javafml"
-loaderVersion = "[4,)"
-#issueTrackerURL = ""
-license = "Insert License Here"
+loaderVersion = "[2,)" # Для 1.21.1 NeoForge использует версию лоадера 2 и выше
+license = "MIT"
+issueTrackerURL = "https://github.com/NezerX/Aspect-Alchemy/issues"
 
 [[mods]]
 modId = "aspectalchemy"
 version = "1.0.0"
 displayName = "Aspect Alchemy"
-authors = "Me!"
+authors = "NezerX"
+displayURL = "https://github.com/NezerX/Aspect-Alchemy"
+logoFile = "assets/aspectalchemy/icon.png"
 description = '''
-This is an example description! Tell everyone what your mod is about!
+Brew unique potions by combining alchemical aspects of Minecraft items!
 '''
-#logoFile = ""
 
 [[dependencies.aspectalchemy]]
 modId = "neoforge"

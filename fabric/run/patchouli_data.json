@@ -1,5 +1,15 @@
 {
   "bookGuiScale": 0,
   "clickedVisualize": false,
-  "bookData": {}
+  "bookData": {
+    "aspectalchemy:alchemists_guide": {
+      "viewedEntries": [
+        "aspectalchemy:guide/crafting",
+        "aspectalchemy:guide/intro",
+        "aspectalchemy:guide/list"
+      ],
+      "bookmarks": [],
+      "completedManualQuests": []
+    }
+  }
 }

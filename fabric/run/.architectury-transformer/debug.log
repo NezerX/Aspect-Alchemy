@@ -114,25 +114,84 @@
 [Architectury Transformer DEBUG]  - /home/nezerx/Dev/aspect-alchemy-architectury/.gradle/loom-cache/remapped_mods/remapped/net/fabricmc/fabric-api/fabric-resource-loader-v0-b9d2d3ba/1.3.1+5b5275af19/fabric-resource-loader-v0-b9d2d3ba-1.3.1+5b5275af19.jar
 [Architectury Transformer DEBUG]  - /home/nezerx/Dev/aspect-alchemy-architectury/.gradle/loom-cache/remapped_mods/remapped/net/fabricmc/fabric-api/fabric-sound-api-v1-b9d2d3ba/1.0.23+6573ed8c19/fabric-sound-api-v1-b9d2d3ba-1.0.23+6573ed8c19.jar
 [Architectury Transformer DEBUG]  - /home/nezerx/Dev/aspect-alchemy-architectury/.gradle/loom-cache/remapped_mods/remapped/net/fabricmc/fabric-api/fabric-transitive-access-wideners-v1-b9d2d3ba/6.2.0+45b9699719/fabric-transitive-access-wideners-v1-b9d2d3ba-6.2.0+45b9699719.jar
-[Architectury Transformer] Read classpath in 1.575 s
+[Architectury Transformer] Read classpath in 1.195 s
 [Architectury Transformer DEBUG] Closed File Systems for /home/nezerx/Dev/aspect-alchemy-architectury/common/build/devlibs/aspectalchemy-common-1.0.0-dev.jar
-[Architectury Transformer DEBUG] Transforming 5 transformer(s) from /home/nezerx/Dev/aspect-alchemy-architectury/common/build/devlibs/aspectalchemy-common-1.0.0-dev.jar to /tmp/10446752035901903956.jar: 
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RuntimeMixinRefmapDetector@7e2d773b
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.GenerateFakeFabricMod@2173f6d9
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformExpectPlatform@307f6b8c
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RemapInjectables@7a187f14
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformPlatformOnly@6f195bc3
-[Architectury Transformer DEBUG] Transforming from /home/nezerx/Dev/aspect-alchemy-architectury/common/build/devlibs/aspectalchemy-common-1.0.0-dev.jar to /tmp/10446752035901903956.jar with 5 transformer(s) on dev.architectury.transformer.handler.SimpleTransformerHandler
+[Architectury Transformer DEBUG] Transforming 5 transformer(s) from /home/nezerx/Dev/aspect-alchemy-architectury/common/build/devlibs/aspectalchemy-common-1.0.0-dev.jar to /tmp/3977270840325342615.jar: 
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RuntimeMixinRefmapDetector@6d2a209c
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.GenerateFakeFabricMod@75329a49
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformExpectPlatform@161479c6
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RemapInjectables@4313f5bc
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformPlatformOnly@7f010382
+[Architectury Transformer DEBUG] Transforming from /home/nezerx/Dev/aspect-alchemy-architectury/common/build/devlibs/aspectalchemy-common-1.0.0-dev.jar to /tmp/3977270840325342615.jar with 5 transformer(s) on dev.architectury.transformer.handler.SimpleTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/ExampleMod with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/client/patchouli/AspectTooltipComponent with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/data/AspectAlchemyData with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/data/AspectAlchemyData$AspectEntry with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/compat/patchouli/IngredientProcessor with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/compat/jade/AspectAlchemyJadePlugin with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/compat/jade/AspectCauldronProvider with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/item/MultiUsePotionItem with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/item/AlchemistsGuideItem with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/init/ModBlockEntities with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/init/ModItems with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/init/ModBlocks with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/block/AspectEmptyCauldronBlock with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/block/AspectCauldronBlock with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/block/entity/AspectCauldronBlockEntity with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/AspectAlchemyMod with maxs=true frames=true
 [Architectury Transformer DEBUG] Checking whether /aspectalchemy.mixins.json is a mixin config.
-[Architectury Transformer DEBUG] Closed File Systems for /tmp/10446752035901903956.jar
+[Architectury Transformer DEBUG] Checking whether /aspect-alchemy.mixins.json is a mixin config.
+[Architectury Transformer DEBUG] Closed File Systems for /tmp/3977270840325342615.jar
 [Architectury Transformer] Listening at /home/nezerx/Dev/aspect-alchemy-architectury/common/build/devlibs/aspectalchemy-common-1.0.0-dev.jar
-[Architectury Transformer DEBUG] Temporary jar [/tmp/10446752035901903956.jar] contains packages: nezerx.aspectalchemy
+[Architectury Transformer DEBUG] Temporary jar [/tmp/3977270840325342615.jar] contains packages: nezerx.aspectalchemy.data, nezerx.aspectalchemy.block.entity, nezerx.aspectalchemy, nezerx.aspectalchemy.item, nezerx.aspectalchemy.block, nezerx.aspectalchemy.init, nezerx.aspectalchemy.compat.jade, nezerx.aspectalchemy.client.patchouli, nezerx.aspectalchemy.compat.patchouli
 [Architectury Transformer DEBUG] Closed File Systems for /home/nezerx/Dev/aspect-alchemy-architectury/common/build/devlibs/aspectalchemy-common-1.0.0-dev.jar
 [Architectury Transformer DEBUG] Classpath entry [/home/nezerx/Dev/aspect-alchemy-architectury/fabric/build/classes/java/main] contains packages: nezerx.aspectalchemy.fabric.client, nezerx.aspectalchemy.fabric
 [Architectury Transformer DEBUG] Classpath entry [/home/nezerx/Dev/aspect-alchemy-architectury/fabric/build/resources/main] contains packages: 
-[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/ExampleMod.class to nezerx/aspectalchemy/ExampleMod.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/AspectAlchemyMod.class to nezerx/aspectalchemy/AspectAlchemyMod.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/ExampleMod with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/ExampleMod in 847.7 μs
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/AspectAlchemyMod with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/AspectAlchemyMod in 1.137 ms
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/init/ModBlocks.class to nezerx/aspectalchemy/init/ModBlocks.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/init/ModBlocks with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/init/ModBlocks in 600.7 μs
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/block/AspectEmptyCauldronBlock.class to nezerx/aspectalchemy/block/AspectEmptyCauldronBlock.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/block/AspectEmptyCauldronBlock with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/block/AspectEmptyCauldronBlock in 713.7 μs
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/block/AspectCauldronBlock.class to nezerx/aspectalchemy/block/AspectCauldronBlock.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/block/AspectCauldronBlock with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/block/AspectCauldronBlock in 2.159 ms
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/block/entity/AspectCauldronBlockEntity.class to nezerx/aspectalchemy/block/entity/AspectCauldronBlockEntity.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/block/entity/AspectCauldronBlockEntity with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/block/entity/AspectCauldronBlockEntity in 3.276 ms
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/init/ModBlockEntities.class to nezerx/aspectalchemy/init/ModBlockEntities.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/init/ModBlockEntities with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/init/ModBlockEntities in 463.3 μs
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/init/ModItems.class to nezerx/aspectalchemy/init/ModItems.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/init/ModItems with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/init/ModItems in 571.1 μs
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/item/AlchemistsGuideItem.class to nezerx/aspectalchemy/item/AlchemistsGuideItem.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/item/AlchemistsGuideItem with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/item/AlchemistsGuideItem in 408.7 μs
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/item/MultiUsePotionItem.class to nezerx/aspectalchemy/item/MultiUsePotionItem.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/item/MultiUsePotionItem with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/item/MultiUsePotionItem in 663.5 μs
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/client/patchouli/AspectTooltipComponent.class to nezerx/aspectalchemy/client/patchouli/AspectTooltipComponent.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/client/patchouli/AspectTooltipComponent with maxs=true frames=true
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/data/AspectAlchemyData.class to nezerx/aspectalchemy/data/AspectAlchemyData.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/client/patchouli/AspectTooltipComponent in 1.797 ms
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/data/AspectAlchemyData with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/data/AspectAlchemyData in 3.039 ms
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/data/AspectAlchemyData$AspectEntry.class to nezerx/aspectalchemy/data/AspectAlchemyData$AspectEntry.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/data/AspectAlchemyData$AspectEntry with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/data/AspectAlchemyData$AspectEntry in 570.0 μs

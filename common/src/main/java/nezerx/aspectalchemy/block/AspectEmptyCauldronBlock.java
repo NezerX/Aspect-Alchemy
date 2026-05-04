@@ -52,7 +52,7 @@ public class AspectEmptyCauldronBlock extends Block {
     @Override
     public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (!level.isClientSide && !player.getAbilities().instabuild) {
-            Block.popResource(level, pos, new ItemStack(ModBlocks.ASPECT_EMPTY_CAULDRON.asItem()));
+            Block.popResource(level, pos, new ItemStack(ModBlocks.ASPECT_EMPTY_CAULDRON.get().asItem()));
         }
         return super.playerWillDestroy(level, pos, state, player);
     }
@@ -63,7 +63,7 @@ public class AspectEmptyCauldronBlock extends Block {
         if (level.isClientSide) return InteractionResult.SUCCESS;
 
         if (handStack.is(Items.WATER_BUCKET)) {
-            level.setBlock(pos, ModBlocks.ASPECT_CAULDRON.defaultBlockState()
+            level.setBlock(pos, ModBlocks.ASPECT_CAULDRON.get().defaultBlockState()
                     .setValue(AspectCauldronBlock.LEVEL, 3), Block.UPDATE_ALL);
             level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0f, 1.0f);
             if (!player.getAbilities().instabuild) {
@@ -75,7 +75,7 @@ public class AspectEmptyCauldronBlock extends Block {
         if (handStack.is(Items.POTION)) {
             PotionContents contents = handStack.get(DataComponents.POTION_CONTENTS);
             if (contents != null && contents.is(Potions.WATER)) {
-                level.setBlock(pos, ModBlocks.ASPECT_CAULDRON.defaultBlockState()
+                level.setBlock(pos, ModBlocks.ASPECT_CAULDRON.get().defaultBlockState()
                         .setValue(AspectCauldronBlock.LEVEL, 1), Block.UPDATE_ALL);
                 level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0f, 1.0f);
                 if (!player.getAbilities().instabuild) {

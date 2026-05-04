@@ -45,13 +45,17 @@ dependencies {
 }
 
 processResources {
-    inputs.property 'version', project.version
+    def expandProps = [
+            "version": project.version,
+            "architectury_api_version": rootProject.architectury_api_version
+    ]
+
+    inputs.properties(expandProps)
 
     filesMatching('META-INF/neoforge.mods.toml') {
-        expand version: inputs.properties.version
+        expand expandProps
     }
 }
-
 shadowJar {
     configurations = [project.configurations.shadowBundle]
     archiveClassifier = 'dev-shadow'

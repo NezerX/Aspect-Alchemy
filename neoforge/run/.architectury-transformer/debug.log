@@ -97,36 +97,140 @@
 [Architectury Transformer DEBUG]  - /home/nezerx/Dev/aspect-alchemy-architectury/.gradle/loom-cache/remapped_mods/remapped/dev/architectury/architectury-neoforge-0311eecf/13.0.8/architectury-neoforge-0311eecf-13.0.8.jar
 [Architectury Transformer DEBUG]  - /home/nezerx/Dev/aspect-alchemy-architectury/.gradle/loom-cache/remapped_mods/remapped/vazkii/patchouli/Patchouli-0311eecf/1.21.1-93-NEOFORGE/Patchouli-0311eecf-1.21.1-93-NEOFORGE.jar
 [Architectury Transformer DEBUG]  - /home/nezerx/Dev/aspect-alchemy-architectury/.gradle/loom-cache/remapped_mods/remapped/maven/modrinth/jade-0311eecf/yd8FKCmx/jade-0311eecf-yd8FKCmx.jar
-[Architectury Transformer] Read classpath in 1.699 s
+[Architectury Transformer] Read classpath in 1.511 s
 [Architectury Transformer DEBUG] Closed File Systems for /home/nezerx/Dev/aspect-alchemy-architectury/common/build/devlibs/aspectalchemy-common-1.0.0-dev.jar
-[Architectury Transformer DEBUG] Transforming 6 transformer(s) from /home/nezerx/Dev/aspect-alchemy-architectury/common/build/devlibs/aspectalchemy-common-1.0.0-dev.jar to /tmp/17168325866707444186.jar: 
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformExpectPlatform@42607a4f
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RemapInjectables@782663d3
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformPlatformOnly@1990a65e
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeAnnotations@64485a47
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment@25bbf683
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.GenerateFakeNeoForgeMod@6ec8211c
-[Architectury Transformer DEBUG] Transforming from /home/nezerx/Dev/aspect-alchemy-architectury/common/build/devlibs/aspectalchemy-common-1.0.0-dev.jar to /tmp/17168325866707444186.jar with 6 transformer(s) on dev.architectury.transformer.handler.SimpleTransformerHandler
+[Architectury Transformer DEBUG] Transforming 6 transformer(s) from /home/nezerx/Dev/aspect-alchemy-architectury/common/build/devlibs/aspectalchemy-common-1.0.0-dev.jar to /tmp/4637411970859968319.jar: 
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformExpectPlatform@7dc0f706
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RemapInjectables@4009e306
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformPlatformOnly@43c1b556
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeAnnotations@587e5365
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment@22fcf7ab
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.GenerateFakeNeoForgeMod@2de23121
+[Architectury Transformer DEBUG] Transforming from /home/nezerx/Dev/aspect-alchemy-architectury/common/build/devlibs/aspectalchemy-common-1.0.0-dev.jar to /tmp/4637411970859968319.jar with 6 transformer(s) on dev.architectury.transformer.handler.SimpleTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000797f3c02fbf0@706a04ae
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000700ccc02fbf0@79d8407f
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/ExampleMod with maxs=true frames=true
-[Architectury Transformer DEBUG] Closed File Systems for /tmp/17168325866707444186.jar
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/AspectAlchemyMod with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/client/patchouli/AspectTooltipComponent with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/data/AspectAlchemyData with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/data/AspectAlchemyData$AspectEntry with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/compat/patchouli/IngredientProcessor with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/compat/jade/AspectCauldronProvider with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/compat/jade/AspectAlchemyJadePlugin with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/item/MultiUsePotionItem with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/item/AlchemistsGuideItem with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/init/ModBlockEntities with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/init/ModItems with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/init/ModBlocks with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/block/AspectCauldronBlock with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/block/AspectEmptyCauldronBlock with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/block/entity/AspectCauldronBlockEntity with maxs=true frames=true
+[Architectury Transformer DEBUG] Closed File Systems for /tmp/4637411970859968319.jar
 [Architectury Transformer] Listening at /home/nezerx/Dev/aspect-alchemy-architectury/common/build/devlibs/aspectalchemy-common-1.0.0-dev.jar
-[Architectury Transformer DEBUG] Temporary jar [/tmp/17168325866707444186.jar] contains packages: nezerx.aspectalchemy
+[Architectury Transformer DEBUG] Temporary jar [/tmp/4637411970859968319.jar] contains packages: nezerx.aspectalchemy.data, nezerx.aspectalchemy.block.entity, nezerx.aspectalchemy, nezerx.aspectalchemy.item, nezerx.aspectalchemy.block, nezerx.aspectalchemy.init, nezerx.aspectalchemy.compat.jade, nezerx.aspectalchemy.client.patchouli, nezerx.aspectalchemy.compat.patchouli
 [Architectury Transformer DEBUG] Closed File Systems for /home/nezerx/Dev/aspect-alchemy-architectury/common/build/devlibs/aspectalchemy-common-1.0.0-dev.jar
-[Architectury Transformer DEBUG] Classpath entry [/home/nezerx/Dev/aspect-alchemy-architectury/neoforge/build/classes/java/main] contains packages: nezerx.aspectalchemy.neoforge
+[Architectury Transformer DEBUG] Classpath entry [/home/nezerx/Dev/aspect-alchemy-architectury/neoforge/build/classes/java/main] contains packages: nezerx.aspectalchemy.neoforge, nezerx.aspectalchemy.neoforge.client
 [Architectury Transformer DEBUG] Classpath entry [/home/nezerx/Dev/aspect-alchemy-architectury/neoforge/build/resources/main] contains packages: 
-[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/ExampleMod.class to nezerx/aspectalchemy/ExampleMod.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/AspectAlchemyMod.class to nezerx/aspectalchemy/AspectAlchemyMod.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000797f3c02fbf0@706a04ae
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000700ccc02fbf0@79d8407f
 [Architectury Transformer DEBUG] Remapping with Dirty Mappings...
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/ExampleMod with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/ExampleMod in 73.67 ms
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/AspectAlchemyMod with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/AspectAlchemyMod in 81.59 ms
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/init/ModBlocks.class to nezerx/aspectalchemy/init/ModBlocks.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000700ccc02fbf0@79d8407f
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/init/ModBlocks with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/init/ModBlocks in 13.38 ms
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/block/AspectEmptyCauldronBlock.class to nezerx/aspectalchemy/block/AspectEmptyCauldronBlock.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000700ccc02fbf0@79d8407f
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/block/AspectEmptyCauldronBlock with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/block/AspectEmptyCauldronBlock in 11.75 ms
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/block/AspectCauldronBlock.class to nezerx/aspectalchemy/block/AspectCauldronBlock.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000700ccc02fbf0@79d8407f
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/block/AspectCauldronBlock with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/block/AspectCauldronBlock in 11.81 ms
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/init/ModBlockEntities.class to nezerx/aspectalchemy/init/ModBlockEntities.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000700ccc02fbf0@79d8407f
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/init/ModBlockEntities with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/init/ModBlockEntities in 9.095 ms
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/init/ModItems.class to nezerx/aspectalchemy/init/ModItems.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000700ccc02fbf0@79d8407f
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/init/ModItems with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/init/ModItems in 9.573 ms
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/item/MultiUsePotionItem.class to nezerx/aspectalchemy/item/MultiUsePotionItem.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000700ccc02fbf0@79d8407f
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/item/MultiUsePotionItem with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/item/MultiUsePotionItem in 12.45 ms
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/item/AlchemistsGuideItem.class to nezerx/aspectalchemy/item/AlchemistsGuideItem.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000700ccc02fbf0@79d8407f
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/item/AlchemistsGuideItem with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/item/AlchemistsGuideItem in 11.47 ms
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/block/entity/AspectCauldronBlockEntity.class to nezerx/aspectalchemy/block/entity/AspectCauldronBlockEntity.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000700ccc02fbf0@79d8407f
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/block/entity/AspectCauldronBlockEntity with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/block/entity/AspectCauldronBlockEntity in 15.72 ms
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/compat/jade/AspectAlchemyJadePlugin.class to nezerx/aspectalchemy/compat/jade/AspectAlchemyJadePlugin.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000700ccc02fbf0@79d8407f
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/compat/jade/AspectAlchemyJadePlugin with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/compat/jade/AspectAlchemyJadePlugin in 16.91 ms
+[Architectury Transformer DEBUG] Transforming from nezerx/aspectalchemy/compat/jade/AspectCauldronProvider.class to nezerx/aspectalchemy/compat/jade/AspectCauldronProvider.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000700ccc02fbf0@79d8407f
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing nezerx/aspectalchemy/compat/jade/AspectCauldronProvider with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed nezerx/aspectalchemy/compat/jade/AspectCauldronProvider in 20.50 ms

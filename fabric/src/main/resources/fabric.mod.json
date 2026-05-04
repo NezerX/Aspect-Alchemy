@@ -20,9 +20,6 @@
     ],
     "client": [
       "nezerx.aspectalchemy.fabric.client.AspectAlchemyFabricClient"
-    ],
-    "jade": [
-      "nezerx.aspectalchemy.compat.jade.AspectAlchemyJadePlugin"
     ]
   },
   "mixins": [
@@ -33,7 +30,8 @@
     "minecraft": "~1.21.1",
     "java": ">=21",
     "architectury": ">=${architectury_api_version}",
-    "fabric-api": "*"
+    "fabric-api": "*",
+    "patchouli": "*"
   },
   "suggests": {
     "jade": "*",

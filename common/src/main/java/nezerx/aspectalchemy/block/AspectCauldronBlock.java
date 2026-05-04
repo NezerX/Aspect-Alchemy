@@ -52,7 +52,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AspectCauldronBlock extends LayeredCauldronBlock implements EntityBlock {
+public class AspectCauldronBlock extends Block implements EntityBlock {
     public static final IntegerProperty LEVEL = IntegerProperty.create("level", 1, 3);
     public static final BooleanProperty BOILING = BooleanProperty.create("boiling");
 
@@ -73,9 +73,10 @@ public class AspectCauldronBlock extends LayeredCauldronBlock implements EntityB
     }
 
     public AspectCauldronBlock(Properties properties) {
-        // Исправлено: используем предикат (p -> false) и правильный InteractionMap
-        super(null, CauldronInteraction.EMPTY, properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(LEVEL, 1).setValue(BOILING, false));
+        super(properties);
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(LEVEL, 1)
+                .setValue(BOILING, false));
     }
 
     @Override
@@ -102,7 +103,7 @@ public class AspectCauldronBlock extends LayeredCauldronBlock implements EntityB
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
-        if (type != ModBlockEntities.ASPECT_CAULDRON) return null;
+        if (type != ModBlockEntities.ASPECT_CAULDRON.get()) return null;
         if (level.isClientSide) return (l, p, s, be) -> tickParticles(l, p, s, (AspectCauldronBlockEntity) be);
         return (l, p, s, be) -> AspectCauldronBlockEntity.tick(l, p, s, (AspectCauldronBlockEntity) be);
     }
@@ -146,7 +147,7 @@ public class AspectCauldronBlock extends LayeredCauldronBlock implements EntityB
         } else {
             cauldron.clearInventory();
             // Исправлено: defaultBlockState() вместо getDefaultState()
-            level.setBlock(pos, ModBlocks.ASPECT_EMPTY_CAULDRON.defaultBlockState(), 3);
+            level.setBlock(pos, ModBlocks.ASPECT_EMPTY_CAULDRON.get().defaultBlockState(), 3);
         }
     }
 
@@ -306,9 +307,9 @@ public class AspectCauldronBlock extends LayeredCauldronBlock implements EntityB
 
     private Item getBottleResult(Item input) {
         if (input == Items.GLASS_BOTTLE) return Items.POTION;
-        if (input == ModItems.GLASS_BOTTLE_SMALL) return ModItems.POTION_SMALL;
-        if (input == ModItems.GLASS_BOTTLE_MEDIUM) return ModItems.POTION_MEDIUM;
-        if (input == ModItems.GLASS_BOTTLE_LARGE) return ModItems.POTION_LARGE;
+        if (input == ModItems.GLASS_BOTTLE_SMALL.get()) return ModItems.POTION_SMALL.get();
+        if (input == ModItems.GLASS_BOTTLE_MEDIUM.get()) return ModItems.POTION_MEDIUM.get();
+        if (input == ModItems.GLASS_BOTTLE_LARGE.get()) return ModItems.POTION_LARGE.get();
         return null;
     }
 

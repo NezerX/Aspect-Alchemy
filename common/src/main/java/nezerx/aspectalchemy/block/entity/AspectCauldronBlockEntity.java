@@ -61,7 +61,7 @@ public class AspectCauldronBlockEntity extends BlockEntity {
     private boolean pendingLevelDecrease = false;
 
     public AspectCauldronBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.ASPECT_CAULDRON, pos, state);
+        super(ModBlockEntities.ASPECT_CAULDRON.get(), pos, state);
         this.itemCollectionBox = new AABB(
                 pos.getX() + 0.2, pos.getY() + 0.3, pos.getZ() + 0.2,
                 pos.getX() + 0.8, pos.getY() + 0.9, pos.getZ() + 0.8
@@ -341,7 +341,7 @@ public class AspectCauldronBlockEntity extends BlockEntity {
                 int duration = entry.getKey().isInstantenous() ? 1 : 3600;
                 result.add(new MobEffectInstance(
                         BuiltInRegistries.MOB_EFFECT.wrapAsHolder(entry.getKey()),
-                        duration, amplifier, false, false, true
+                        duration, amplifier, false, true, true
                 ));
             }
         }
