@@ -1,0 +1,33 @@
+{
+  "name": "Equipo Alquímico",
+  "category": "aspectalchemy:guide",
+  "icon": "aspectalchemy:glass_bottle_medium",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Antes de que uno pueda dar comienzo a la Gran Obra, deben forjarse los recipientes adecuados. El Caldero de Aspectos no es una olla ordinaria, y el cristal necesario para el almacenamiento de esencias debe ser reforzado con metales preciosos."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "aspectalchemy:aspect_empty_cauldron",
+      "title": "Forjando el Caldero",
+      "text": "El fundamento de tu laboratorio. Una vasija pesada forjada en cobre y oro, diseñada para resistir el inmenso calor y la presión espiritual de la transmutación de aspectos."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "aspectalchemy:glass_bottle_small",
+      "text": "El vidrio ordinario es demasiado frágil para las esencias puras. Al reforzar una botella con cobre, creas un recipiente capaz de contener brebajes alquímicos básicos."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "aspectalchemy:glass_bottle_medium",
+      "text": "Dorar el vidrio con oro proporciona una resonancia superior, permitiendo que la botella contenga mezclas más complejas sin fragmentarse por la energía interna."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "aspectalchemy:glass_bottle_large",
+      "title": "Frasco Alquímico Grande",
+      "text": "El pináculo del almacenamiento. Fragmentos de amatista y diamante estabilizan los mayores volúmenes de magia líquida, creando un campo de contención casi perfecto para los elixires más volátiles."
+    }
+  ]
+}

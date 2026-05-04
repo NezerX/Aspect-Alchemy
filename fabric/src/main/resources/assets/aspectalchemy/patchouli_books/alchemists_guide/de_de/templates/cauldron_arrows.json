@@ -1,0 +1,10 @@
+{
+  "components": [
+    { "type": "patchouli:text", "text": "$(l)Alchemistische Tränkung$()$(br)Das kochende Wasser kann genutzt werden, um Pfeilspitzen mit mächtigen Suden zu überziehen.", "x": 0, "y": 0 },
+    { "type": "patchouli:item", "item": "minecraft:arrow", "x": 48, "y": 38 },
+    { "type": "patchouli:item", "item": "minecraft:potion[potion_contents={potion:'minecraft:harming'}]", "x": 48, "y": 60 },
+    { "type": "patchouli:image", "image": "aspectalchemy:textures/gui/arrow.png", "x": 48, "y": 65, "width": 16, "height": 13 },
+    { "type": "patchouli:item", "item": "aspectalchemy:aspect_cauldron", "x": 48, "y": 85 },
+    { "type": "patchouli:item", "item": "minecraft:tipped_arrow[potion_contents={potion:'minecraft:harming'}]", "x": 48, "y": 110 }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "GGG",
+    "GBG",
+    "GGG"
+  ],
+  "key": {
+    "G": { "item": "minecraft:gold_ingot" },
+    "B": { "item": "aspectalchemy:glass_bottle_small" }
+  },
+  "result": { "item": "aspectalchemy:glass_bottle_medium" }
+}

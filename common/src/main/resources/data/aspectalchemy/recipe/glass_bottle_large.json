@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ADA",
+    "ABA",
+    "AMA"
+  ],
+  "key": {
+    "D": { "item": "minecraft:diamond" },
+    "A": { "item": "minecraft:amethyst_shard" },
+    "M": { "item": "minecraft:copper_block" },
+    "B": { "item": "aspectalchemy:glass_bottle_medium" }
+  },
+  "result": {
+    "id": "aspectalchemy:glass_bottle_large",
+    "count": 1
+  }
+}

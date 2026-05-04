@@ -1,0 +1,21 @@
+{
+  "name": "Der Kessel: Einführung",
+  "category": "aspectalchemy:guide",
+  "icon": "aspectalchemy:aspect_cauldron",
+  "pages": [
+    {
+      "type": "aspectalchemy:cauldron_scheme"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Das Große Werk",
+      "text": "Der Aspektkessel steht als Herzstück im Zentrum einer Alchemistenwerkstatt. Um seine schlummernde Macht zu erwecken, muss eine konstante Hitzequelle unter seinem Eisenbauch aufrechterhalten werden. Sobald die Flüssigkeit zu wallen und zu sprudeln beginnt, kann die Transmutation beginnen.$(br2)I. Gib vorsichtig bis zu $(6)3 einzigartige Zutaten$(0) in die brodelnde Tiefe.$(br)II. Die verborgenen Essenzen manifestieren sich nur, wenn $(6)mindestens 2 Zutaten$(0) eine gemeinsame Resonanz teilen.$(br)III. Man kann in die dampfenden Nebel treten, um ihre vergänglichen Gaben zu empfangen, oder Glasflaschen verwenden, um das Gebräu für später zu bewahren."
+    },
+    {
+      "type": "aspectalchemy:cauldron_arrows"
+    },
+    {
+      "type": "aspectalchemy:cauldron_colouring"
+    }
+  ]
+}

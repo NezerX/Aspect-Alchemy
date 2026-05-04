@@ -1,0 +1,21 @@
+{
+  "name": "The Cauldron: Introduction",
+  "category": "aspectalchemy:guide",
+  "icon": "aspectalchemy:aspect_cauldron",
+  "pages": [
+    {
+      "type": "aspectalchemy:cauldron_scheme"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "The Great Work",
+      "text": "The Aspect Cauldron stands as the heart of an alchemist's workshop. To awaken its latent power, one must maintain a constant heat source beneath its iron belly. Once the liquid begins to churn and bubble, the transmutation may commence.$(br2)I. Carefully introduce up to $(6)3 unique ingredients$(0) into the roiling depths.$(br)II. The hidden essences will only manifest if $(6)at least 2 ingredients$(0) share a common resonance.$(br)III. One may step into the steaming vapors to embrace their ephemeral gifts, or use glass bottles to preserve the concoction for later use."
+    },
+    {
+      "type": "aspectalchemy:cauldron_arrows"
+    },
+    {
+      "type": "aspectalchemy:cauldron_colouring"
+    }
+  ]
+}

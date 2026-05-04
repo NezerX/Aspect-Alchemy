@@ -1,0 +1,21 @@
+{
+  "name": "El Caldero: Introducción",
+  "category": "aspectalchemy:guide",
+  "icon": "aspectalchemy:aspect_cauldron",
+  "pages": [
+    {
+      "type": "aspectalchemy:cauldron_scheme"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "La Gran Obra",
+      "text": "El Caldero de Aspectos se erige como el corazón del taller de un alquimista. Para despertar su poder latente, se debe mantener una fuente de calor constante bajo su vientre de hierro. Una vez que el líquido comience a agitarse y burbujear, la transmutación podrá comenzar.$(br2)I. Introduce con cuidado hasta $(6)3 ingredientes únicos$(0) en las profundidades turbulentas.$(br)II. Las esencias ocultas solo se manifestarán si $(6)al menos 2 ingredientes$(0) comparten una resonancia común.$(br)III. Uno puede adentrarse en los vapores humeantes para abrazar sus dones efímeros, o usar botellas de vidrio para preservar el ungüento para un uso posterior."
+    },
+    {
+      "type": "aspectalchemy:cauldron_arrows"
+    },
+    {
+      "type": "aspectalchemy:cauldron_colouring"
+    }
+  ]
+}

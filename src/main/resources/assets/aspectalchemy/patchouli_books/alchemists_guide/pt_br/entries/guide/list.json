@@ -1,0 +1,25 @@
+{
+  "name": "Ingredient List",
+  "category": "aspectalchemy:guide",
+  "icon": "minecraft:nether_wart",
+  "pages": [
+    {
+      "type": "aspectalchemy:ingredient_grid",
+      "items": "minecraft:rabbit_foot,minecraft:phantom_membrane,minecraft:sugar,minecraft:blaze_powder,minecraft:redstone,minecraft:gunpowder,minecraft:lapis_lazuli,minecraft:fermented_spider_eye,minecraft:ghast_tear,minecraft:golden_apple,minecraft:turtle_helmet,minecraft:glistering_melon_slice,minecraft:golden_carrot,minecraft:magma_cream,minecraft:spider_eye,minecraft:pufferfish,minecraft:glowstone_dust,minecraft:dragon_breath,minecraft:nether_wart,minecraft:red_mushroom",
+      "item0": "minecraft:rabbit_foot", "item1": "minecraft:phantom_membrane", "item2": "minecraft:sugar", "item3": "minecraft:blaze_powder",
+      "item4": "minecraft:redstone", "item5": "minecraft:gunpowder", "item6": "minecraft:lapis_lazuli", "item7": "minecraft:fermented_spider_eye",
+      "item8": "minecraft:ghast_tear", "item9": "minecraft:golden_apple", "item10": "minecraft:turtle_helmet", "item11": "minecraft:glistering_melon_slice",
+      "item12": "minecraft:golden_carrot", "item13": "minecraft:magma_cream", "item14": "minecraft:spider_eye", "item15": "minecraft:pufferfish",
+      "item16": "minecraft:glowstone_dust", "item17": "minecraft:dragon_breath", "item18": "minecraft:nether_wart", "item19": "minecraft:red_mushroom"
+    },
+    {
+      "type": "aspectalchemy:ingredient_grid",
+      "items": "minecraft:brown_mushroom,minecraft:sweet_berries,minecraft:wither_rose,minecraft:amethyst_shard,minecraft:quartz,minecraft:coal,minecraft:torchflower,minecraft:egg,minecraft:soul_sand,minecraft:clay_ball,minecraft:pitcher_plant,minecraft:obsidian,minecraft:diamond,minecraft:echo_shard,minecraft:nether_brick,minecraft:milk_bucket,minecraft:honey_bottle,minecraft:chorus_fruit,minecraft:ender_pearl,minecraft:rotten_flesh",
+      "item0": "minecraft:brown_mushroom", "item1": "minecraft:sweet_berries", "item2": "minecraft:wither_rose", "item3": "minecraft:amethyst_shard",
+      "item4": "minecraft:quartz", "item5": "minecraft:coal", "item6": "minecraft:torchflower", "item7": "minecraft:egg",
+      "item8": "minecraft:soul_sand", "item9": "minecraft:clay_ball", "item10": "minecraft:pitcher_plant", "item11": "minecraft:obsidian",
+      "item12": "minecraft:diamond", "item13": "minecraft:echo_shard", "item14": "minecraft:nether_brick", "item15": "minecraft:milk_bucket",
+      "item16": "minecraft:honey_bottle", "item17": "minecraft:chorus_fruit", "item18": "minecraft:ender_pearl", "item19": "minecraft:rotten_flesh"
+    }
+  ]
+}

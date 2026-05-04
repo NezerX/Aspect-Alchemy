@@ -1,0 +1,21 @@
+{
+  "name": "O Caldeirão: Introdução",
+  "category": "aspectalchemy:guide",
+  "icon": "aspectalchemy:aspect_cauldron",
+  "pages": [
+    {
+      "type": "aspectalchemy:cauldron_scheme"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "A Grande Obra",
+      "text": "O Caldeirão de Aspectos é o coração da oficina de um alquimista. Para despertar seu poder latente, deve-se manter uma fonte de calor constante sob sua barriga de ferro. Quando o líquido começar a agitar e borbulhar, a transmutação poderá começar.$(br2)I. Introduza cuidadosamente até $(6)3 ingredientes únicos$(0) nas profundezas ferventes.$(br)II. As essências ocultas só se manifestarão se $(6)pelo menos 2 ingredientes$(0) compartilharem uma ressonância comum.$(br)III. Pode-se entrar nos vapores fumegantes para abraçar seus dons efêmeros, ou usar frascos de vidro para preservar a mistura para uso posterior."
+    },
+    {
+      "type": "aspectalchemy:cauldron_arrows"
+    },
+    {
+      "type": "aspectalchemy:cauldron_colouring"
+    }
+  ]
+}

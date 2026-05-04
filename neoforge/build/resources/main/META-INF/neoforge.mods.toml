@@ -5,7 +5,7 @@ issueTrackerURL = "https://github.com/NezerX/Aspect-Alchemy/issues"
 
 [[mods]]
 modId = "aspectalchemy"
-version = "1.0.0"
+version = "2.0.0"
 displayName = "Aspect Alchemy"
 authors = "NezerX"
 displayURL = "https://github.com/NezerX/Aspect-Alchemy"
