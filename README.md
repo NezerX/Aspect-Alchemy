@@ -1,73 +1,95 @@
-You can find the Latest version here: https://github.com/NezerX/Aspect-Alchemy/releases
+# Aspect Alchemy
 
-Aspect Alchemy
+> A deep, logic-based potion-making mod for Minecraft (Fabric)
 
-Aspect Alchemy is a Minecraft mod for the Fabric loader that introduces a deep, logic-based potion-making system centered around the Aspect Cauldron. Features Aspect Brewing System
+**Latest release:** [GitHub Releases](https://github.com/NezerX/Aspect-Alchemy/releases)
 
-Every ingredient possesses hidden status effects known as "aspects." Players must combine ingredients to manifest these effects in a final brew.
+---
 
-Logic: An effect is only added to the potion if it is present in at least 2 different ingredients.
+## Overview
 
-Amplification: * Effect appears in 2 ingredients: Level I
+Aspect Alchemy is a Minecraft mod for the Fabric loader that introduces a deep, logic-based potion-making system centered around the **Aspect Cauldron**.
 
-    Effect appears in 3 ingredients: Level II
+---
 
-Capacity: The Aspect Cauldron accepts up to 3 unique ingredients per cycle.
+## Features
 
-Mechanics
+### Aspect Brewing System
 
-Boiling: The cauldron must be placed over a heat source (Fire, Campfire, Lava, Magma) to function.
+Every ingredient possesses hidden status effects known as **"aspects."** Players must combine ingredients to manifest these effects in a final brew.
 
-Visuals: The water color dynamically blends based on the status effects of the added ingredients.
+- **Logic:** An effect is only added to the potion if it is present in **at least 2 different ingredients**.
+- **Amplification:**
+  - Effect appears in **2 ingredients** → Level I
+  - Effect appears in **3 ingredients** → Level II
+- **Capacity:** The Aspect Cauldron accepts up to **3 unique ingredients** per cycle.
 
-Absorption: Players can stand inside the cauldron to apply effects instantly without using bottles.
+---
 
-Compatibility: Full support for Glass Bottles and Buckets.
+## Mechanics
 
-Technical Information
+| Feature | Description |
+|---|---|
+| **Boiling** | The cauldron must be placed over a heat source (Fire, Campfire, Lava, or Magma) to function. |
+| **Visuals** | Water color dynamically blends based on the status effects of added ingredients. |
+| **Absorption** | Players can stand inside the cauldron to apply effects instantly — no bottles needed. |
+| **Compatibility** | Full support for Glass Bottles and Buckets. |
 
-Minecraft Version: 1.20.1
+---
 
-Mod Loader: Fabric
+## Technical Information
 
-Dependencies: Fabric API
+| Property | Value |
+|---|---|
+| Minecraft Version | 1.20.1 |
+| Mod Loader | Fabric |
+| Dependencies | Fabric API |
+| Environment | Required on both Client and Server |
 
-Environment: Required on both Client and Server.
+---
 
-Installation
+## Installation
 
-Ensure you have the latest version of the Fabric Loader installed.
+1. Ensure you have the latest version of the **Fabric Loader** installed.
+2. Download the **Aspect Alchemy** `.jar` file from [Releases](https://github.com/NezerX/Aspect-Alchemy/releases).
+3. Place the `.jar` file and the **Fabric API** into your `mods` folder.
 
-Download the Aspect Alchemy jar file.
+---
 
-Place the jar file and the Fabric API into your mods folder.
+## Building from Source
 
-Building from source
+Clone the repository and run:
 
-To build the mod locally, clone the repository and run the following command: Bash
-
+```bash
 ./gradlew build
+```
 
-The compiled jar will be located in build/libs. Planned Features
+The compiled `.jar` will be located in `build/libs`.
 
-Configuration files for custom duration and amplifier rules.
+---
 
-EMI/JEI/REI integration.
+## Planned Features
 
-Datapack support for adding custom ingredient aspects.
+- [ ] Configuration files for custom duration and amplifier rules
+- [ ] EMI / JEI / REI integration
+- [ ] Datapack support for adding custom ingredient aspects
+- [ ] Aspect Lens for previewing brews
 
-Aspect Lens for previewing brews.
+---
 
-Contributing
+## Contributing
 
-Contributions are welcome. Please follow these steps:
+Contributions are welcome! Please follow these steps:
 
-Fork the repository.
+1. **Fork** the repository.
+2. Create a **feature branch**.
+3. Submit a **Pull Request** with a detailed description of your changes.
 
-Create a feature branch.
+> For bug reports, please use the [GitHub Issues](https://github.com/NezerX/Aspect-Alchemy/issues) tab and include logs via Pastebin.
 
-Submit a Pull Request with a detailed description of your changes.
+---
 
-For bug reports, please use the GitHub Issues tab and include logs via Pastebin. License
+## License
 
-This project is licensed under the MIT License. You are free to use the code with proper attribution.
+This project is licensed under the **MIT License**.
+You are free to use the code with proper attribution.
