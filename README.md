@@ -8,7 +8,7 @@
 
 ## Overview
 
-Aspect Alchemy is a Minecraft mod for the Fabric loader that introduces a deep, logic-based potion-making system centered around the **Aspect Cauldron**.
+Aspect Alchemy is a Minecraft mod for the Fabric/Neoforge loader that introduces a deep, logic-based potion-making system centered around the **Aspect Cauldron**.
 
 ---
 
